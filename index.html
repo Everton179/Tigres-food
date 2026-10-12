@@ -155,8 +155,8 @@
 
         .produto:hover {
             transform: translateY(-4px);
-            border-color: var(--azul);
-            box-shadow: 0 0 15px #1688c959;
+            border-color:blue;
+            box-shadow: black;
         }
 
         .produto img {
@@ -197,7 +197,7 @@
         }
 
         .btn-adicionar:hover {
-            background: var(--azul-escuro);
+            background:black;
         }
 
         /* =========================
@@ -280,7 +280,7 @@
         }
 
         .btn-finalizar:hover {
-            background: var(--azul);
+            background: black;
         }
 
         /* =========================
@@ -669,7 +669,7 @@
         </div>
 
         <button class="btn-finalizar" onclick="abrirCheckout()">
-            Finalizar pedido
+                Continuar
         </button>
     </aside>
 
@@ -767,14 +767,16 @@
                 <div class="info-pagamento" id="infoCartao">
                     <strong>Pagamento com cartão</strong>
                     <p>
-                        O pagamento com cartão de crédito ou débito deve ser realizado
-                        no balcão.
+                       O pagamento com cartão será feito na mesa, com a maquininha.
+                       Aguarde.
                     </p>
                 </div>
 
                 <div class="info-pagamento" id="infoDinheiro">
                     <strong>Pagamento em dinheiro</strong>
-                    <p>O pagamento em dinheiro deve ser realizado no balcão.</p>
+                    <p>O pagamento em dinheiro será realizado na mesa, com maquininha.
+                        Aguarde.
+                    </p>
                 </div>
             </div>
 
@@ -787,9 +789,8 @@
                     Cancelar
                 </button>
 
-                <button class="btn-confirmar" onclick="finalizarPedido()">
-                    Finalizar pedido
-                </button>
+                <!-- aqui tinha um botão de finalizar pedido -->
+
             </div>
         </div>
     </div>
