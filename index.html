@@ -422,6 +422,7 @@
         }
 
         .pix-chave {
+        border: 2px solid black;
             margin: 10px 0;
             padding: 10px;
             background: #fff;
@@ -431,7 +432,8 @@
         }
 
         .btn-pix {
-            background: var(--azul);
+        border: 2px solid black;
+            background:green;
             color: #fff;
             padding: 11px 15px;
             border-radius: 8px;
@@ -443,6 +445,7 @@
         }
 
         .whatsapp {
+        border: 2px solid black;
             display: none;
             background: var(--verde);
             color: #fff;
@@ -638,13 +641,20 @@
 
             <div class="campo">
                 <label for="whatsapp">Seu WhatsApp</label>
-                <input id="whatsapp" type="number" autocomplete="tel"
-                       placeholder="Ex.: (11) 99999-9999" required>
+                <input
+    type="tel"
+    id="whatsapp"
+    placeholder="Ex: (11)987161366"
+    inputmode="numeric"
+    maxlength="11"
+    oninput="this.value = this.value.replace(/\D/g, '').slice(0, 11)"
+    required
+>
             </div>
 
             <div class="campo">
                 <label for="mesa">Número da mesa</label>
-                <input id="mesa" type="number" placeholder="Ex.: 5"
+                <input id="mesa" type="number" placeholder="Ex: 5"
                        min="1" max="10" step="1" required>
             </div>
 
@@ -682,9 +692,8 @@
                 <div class="info-pagamento" id="infoPix">
                     <strong>Pagamento via Pix</strong>
 
-                    <p>
-                        Faça o Pix para a chave abaixo. Depois, envie o comprovante
-                        ao financeiro pelo WhatsApp.
+                    <p>Faça o Pix para a chave abaixo e clique em “Fiz Pix” 
+                        para liberar o envio do pedido pelo WhatsApp.
                     </p>
 
                     <div class="pix-chave" id="pixChave">
@@ -706,15 +715,15 @@
                     <strong>Pagamento com cartão</strong>
                     <p>
                         O pagamento será feito na mesa, com a maquininha.
-                        Finalize o pedido para o garçom vir até você.
+                        Envie o pedido pelo whats para o garçom vir até você.
                     </p>
                 </div>
 
                 <div class="info-pagamento" id="infoDinheiro">
                     <strong>Pagamento em dinheiro</strong>
                     <p>
-                        O pagamento será feito na mesa. Finalize o pedido
-                        para o garçom vir até você.
+                        O pagamento será feito na mesa.
+                         Envie o pedido pelo whats para o garçom vir até você.
                     </p>
                 </div>
             </div>
