@@ -1,0 +1,1213 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tigres Food 🐯</title>
+
+    <style>
+        /* =========================
+           1. CORES E CONFIGURAÇÕES
+        ========================= */
+        :root {
+            --azul: #1688c9;
+            --azul-escuro: #075b91;
+            --roxo: #3c28f1;
+            --texto: #171717;
+            --fundo: #e1dfdf;
+            --branco: #fff;
+            --verde: #25D366;
+            --vermelho: #d93025;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #e1dfdf;
+            color: #222;
+        }
+
+        button,
+        input,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            border: 0;
+            cursor: pointer;
+            font-weight: 700;
+            transition: .2s;
+        }
+
+        button:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible {
+            outline: 3px solid #69c8ff;
+            outline-offset: 2px;
+        }
+
+        /* =========================
+           2. CABEÇALHO E CARRINHO DO TOPO
+        ========================= */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: #3c28f1;;
+            border-bottom: 3px solid #111;
+            padding: 14px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .logo h1 {
+          color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo p {
+            margin-top: 4px;
+            color: #eceaea;
+            font-size: 13px;
+        }
+
+        .btn-carrinho-topo {
+            background:white;
+            color: #101010;
+            padding: 12px 16px;
+            border-radius: 11px;
+            white-space: nowrap;
+        
+        }
+
+        .btn-carrinho-topo:hover {
+           border: 3px solid #111;
+          color: #f1f1f1;
+            background: rgb(14, 14, 14)
+        }
+
+        /* =========================
+           3. CONTEÚDO PRINCIPAL
+        ========================= */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 25px auto 45px;
+        }
+
+        .hero {
+          border: 3px solid #111;
+           max-width: 1100px;
+            margin: 25px auto;
+            padding: 35px 25px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #341ff0, #140f08);
+            color: rgb(239, 239, 239);
+             text-align: center;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+      
+
+        .hero h2 {
+          
+            color:white;
+             font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .hero p {
+          
+            color: #d1cece;
+            line-height: 1.5;
+        }
+
+        /* =========================
+           4. PRODUTOS DO CARDÁPIO
+        ========================= */
+        .produtos {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .produto {
+            background: #fff;
+            border: 3px solid #111;
+            border-radius: 16px;
+            padding: 15px;
+            text-align: center;
+            transition: .2s;
+            box-shadow: 0 5px 12px #0002;
+            overflow: hidden;
+        }
+
+        .produto:hover {
+            transform: translateY(-4px);
+            border-color: var(--azul);
+            box-shadow: 0 0 15px #1688c959;
+        }
+
+        .produto img {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            border-radius: 10px;
+            background: #eee;
+            margin-bottom: 12px;
+        }
+
+        .produto h3 {
+            margin-bottom: 8px;
+            font-size: 19px;
+        }
+
+        .produto p {
+            font-size: 14px;
+            color: #555;
+            min-height: 38px;
+            line-height: 1.4;
+        }
+
+        .preco {
+            font-size: 23px;
+            font-weight: bold;
+            color: var(--azul-escuro);
+            margin: 12px 0;
+        }
+
+        .btn-adicionar {
+            background: var(--azul);
+            color: #fff;
+            padding: 12px 15px;
+            border-radius: 10px;
+            width: 100%;
+            font-size: 15px;
+        }
+
+        .btn-adicionar:hover {
+            background: var(--azul-escuro);
+        }
+
+        /* =========================
+           5. ITENS DENTRO DO CARRINHO
+        ========================= */
+        .vazio {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+        }
+
+        .item-carrinho {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #ccc;
+            padding: 14px 0;
+        }
+
+        .item-info {
+            flex: 1;
+            min-width: 100px;
+        }
+
+        .item-info strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .item-preco {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .quantidade {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quantidade button {
+            width: 30px;
+            height: 30px;
+            border-radius: 7px;
+            background: var(--azul);
+            color: #fff;
+            font-size: 18px;
+        }
+
+        .quantidade span {
+            min-width: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .btn-remover {
+            background: var(--vermelho);
+            color: #fff;
+            padding: 8px 10px;
+            border-radius: 7px;
+        }
+
+        .total {
+            text-align: right;
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 18px;
+            color: var(--azul-escuro);
+        }
+
+        .btn-finalizar {
+            margin-top: 18px;
+            width: 100%;
+            padding: 15px;
+            background: var(--azul-escuro);
+            color: #fff;
+            border-radius: 10px;
+            font-size: 17px;
+        }
+
+        .btn-finalizar:hover {
+            background: var(--azul);
+        }
+
+        /* =========================
+           6. PAINEL LATERAL DO CARRINHO
+        ========================= */
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #0009;
+            z-index: 40;
+        }
+
+        .overlay.aberto {
+            display: block;
+        }
+
+        .painel-carrinho {
+            position: fixed;
+            z-index: 41;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: min(440px, 100%);
+            background: #fff;
+            padding: 22px;
+            overflow: auto;
+            transform: translateX(105%);
+            transition: transform .25s;
+            box-shadow: -5px 0 20px #0003;
+        }
+
+        .painel-carrinho.aberto {
+            transform: translateX(0);
+        }
+
+        .painel-topo {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .fechar {
+            background: #eee;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 18px;
+        }
+
+        .painel-carrinho .btn-finalizar {
+            margin-bottom: 12px;
+        }
+
+        /* =========================
+           7. FORMULÁRIO DE FINALIZAÇÃO
+        ========================= */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 60;
+            inset: 0;
+            background: #000a;
+            align-items: center;
+            justify-content: center;
+            padding: 14px;
+        }
+
+        .modal.aberto {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #fff;
+            border: 3px solid #111;
+            border-radius: 18px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 92vh;
+            overflow-y: auto;
+            padding: 23px;
+        }
+
+        .modal-content h2 {
+            color: var(--azul-escuro);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .campo {
+            margin-bottom: 15px;
+        }
+
+        .campo label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .campo input,
+        .campo textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #bbb;
+            border-radius: 9px;
+            font-size: 15px;
+        }
+
+        .campo textarea {
+            resize: vertical;
+            min-height: 75px;
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .checkbox input {
+            width: auto;
+        }
+
+        /* =========================
+           8. FORMAS DE PAGAMENTO
+        ========================= */
+        .pagamento {
+            margin-top: 20px;
+        }
+
+        .pagamento h3 {
+            margin-bottom: 10px;
+            color: var(--azul-escuro);
+        }
+
+        .opcoes-pagamento {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .opcao-pagamento {
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 12px;
+            cursor: pointer;
+            background: #fff;
+            display: block;
+        }
+
+        .opcao-pagamento:hover,
+        .opcao-pagamento.selecionado {
+            border-color: var(--azul);
+            background: #e8f6ff;
+        }
+
+        .opcao-pagamento input {
+            margin-right: 7px;
+        }
+
+        .info-pagamento {
+            display: none;
+            margin-top: 12px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #e8f6ff;
+            border: 2px solid var(--azul);
+            line-height: 1.5;
+        }
+
+        .info-pagamento strong {
+            color: var(--azul-escuro);
+        }
+
+        .pix-chave {
+            margin: 10px 0;
+            padding: 10px;
+            background: #fff;
+            border-radius: 8px;
+            word-break: break-all;
+            font-weight: bold;
+        }
+
+        .btn-pix {
+            background: var(--azul);
+            color: #fff;
+            padding: 11px 15px;
+            border-radius: 8px;
+            margin-top: 8px;
+        }
+
+        .btn-pix.confirmado {
+            background: #16803d;
+        }
+
+        .whatsapp {
+            display: none;
+            background: var(--verde);
+            color: #fff;
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            margin-top: 12px;
+        }
+
+        .whatsapp:hover {
+            background: #1da851;
+        }
+
+        .botoes-modal {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-cancelar {
+            flex: 1;
+            padding: 13px;
+            background: #ddd;
+            color: #111;
+            border-radius: 9px;
+        }
+
+        .btn-confirmar {
+            flex: 2;
+            padding: 13px;
+            background: var(--azul-escuro);
+            color: #fff;
+            border-radius: 9px;
+        }
+
+        /* =========================
+           9. MENSAGEM APÓS O PEDIDO
+        ========================= */
+        .pedido-enviado {
+            display: none;
+            margin-top: 25px;
+            background: #fff;
+            border: 3px solid var(--azul);
+            border-radius: 18px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 5px 15px #0002;
+        }
+
+        .pedido-enviado h2 {
+            color: var(--azul-escuro);
+            margin-bottom: 10px;
+        }
+
+        .pedido-enviado .tempo {
+            margin-top: 15px;
+            background: #e8f6ff;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid var(--azul);
+        }
+
+        .pedido-enviado .cozinha {
+            margin-top: 15px;
+            font-weight: bold;
+            line-height: 1.5;
+        }
+
+        .aviso {
+            font-size: 13px;
+            color: #555;
+            margin-top: 10px;
+            line-height: 1.4;
+        }
+
+        /* =========================
+           10. AJUSTES PARA CELULAR
+        ========================= */
+        @media (max-width: 750px) {
+            .produtos {
+                grid-template-columns: 1fr;
+            }
+
+            .produto {
+                padding: 15px;
+            }
+
+            .produto img {
+                height: 210px;
+            }
+
+            .item-carrinho {
+                flex-wrap: wrap;
+            }
+
+            .quantidade {
+                order: 2;
+            }
+
+            .btn-remover {
+                order: 3;
+            }
+
+            .modal-content {
+                padding: 17px;
+            }
+
+            .opcoes-pagamento {
+                grid-template-columns: 1fr;
+            }
+
+            .logo p {
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         11. CABEÇALHO
+    ========================= -->
+    <header>
+        <div class="logo">
+            <h1>🐯 Tigres Food</h1>
+        </div>
+
+        <button class="btn-carrinho-topo" onclick="abrirCarrinho()">
+            🛒 Carrinho (<span id="quantidadeTopo">0</span>)
+        </button>
+    </header>
+
+    <!-- =========================
+         12. CARDÁPIO
+         O RESUMO DO CARRINHO FOI REMOVIDO DAQUI.
+    ========================= -->
+    <main class="container">
+        <section class="hero">
+            <h2>🍴 Nosso Cardápio</h2>
+            <p>Escolha seus pastéis favoritos e monte seu pedido.</p>
+        </section>
+
+        <section class="produtos" id="produtos"></section>
+
+        <!-- Mensagem exibida depois de iniciar o pedido -->
+        <section class="pedido-enviado" id="pedidoEnviado">
+            <h2>✅ Pedido iniciado!</h2>
+            <p>Seu pedido foi preparado para envio pelo WhatsApp.</p>
+
+            <div class="tempo">
+                <strong>Status:</strong>
+                <span id="tempoCozinha">Aguardando confirmação da equipe</span>
+            </div>
+
+            <div class="cozinha">
+                Aguarde a confirmação do pedido pela equipe do Tigres Food.
+            </div>
+
+            <p class="aviso">
+                Esta página não acompanha o preparo em tempo real.
+                A confirmação deve ser feita pela equipe.
+            </p>
+        </section>
+    </main>
+
+    <!-- =========================
+         13. PAINEL DO CARRINHO NO TOPO
+         PRODUTOS, TOTAL E FINALIZAÇÃO FICAM AQUI.
+    ========================= -->
+    <div class="overlay" id="overlay" onclick="fecharCarrinho()"></div>
+
+    <aside class="painel-carrinho" id="painelCarrinho" aria-label="Carrinho de compras">
+        <div class="painel-topo">
+            <h2>🛒 Seu carrinho</h2>
+
+            <button class="fechar" onclick="fecharCarrinho()" aria-label="Fechar carrinho">
+                ✕
+            </button>
+        </div>
+
+        <div id="listaCarrinhoPainel">
+            <div class="vazio">Seu carrinho está vazio.</div>
+        </div>
+
+        <div class="total">
+            Total: <span id="totalPainel">R$ 0,00</span>
+        </div>
+
+        <button class="btn-finalizar" onclick="abrirCheckout()">
+            Finalizar pedido
+        </button>
+    </aside>
+
+    <!-- =========================
+         14. MODAL COM DADOS DO CLIENTE
+    ========================= -->
+    <div class="modal" id="checkoutModal" role="dialog"
+         aria-modal="true" aria-labelledby="tituloCheckout">
+
+        <div class="modal-content">
+            <h2 id="tituloCheckout">📋 Finalizar pedido</h2>
+
+            <div class="campo">
+                <label for="nome">Nome completo</label>
+                <input id="nome" type="text" autocomplete="name"
+                       placeholder="Digite seu nome completo">
+            </div>
+
+            <div class="campo">
+                <label for="whatsapp">Seu WhatsApp</label>
+                <input id="whatsapp" type="tel" autocomplete="tel"
+                       placeholder="Ex.: (11) 99999-9999">
+            </div>
+
+            <div class="campo">
+                <label for="mesa">Número da mesa</label>
+                <input id="mesa" type="text" placeholder="Ex.: 5">
+            </div>
+
+            <div class="campo">
+                <label for="observacao">Observação do pedido</label>
+                <textarea id="observacao"
+                          placeholder="Ex.: sem orégano, pouco molho..."></textarea>
+
+                <label class="checkbox">
+                    <input type="checkbox" id="nenhuma" onchange="alterarObservacao()">
+                    Nenhuma observação
+                </label>
+            </div>
+
+            <!-- =========================
+                 15. OPÇÕES DE PAGAMENTO
+            ========================= -->
+            <div class="pagamento">
+                <h3>💳 Forma de pagamento</h3>
+
+                <div class="opcoes-pagamento">
+                    <label class="opcao-pagamento"
+                           onclick="selecionarPagamento('Pix', this)">
+                        <input type="radio" name="pagamento" value="Pix">
+                        Pix
+                    </label>
+
+                    <label class="opcao-pagamento"
+                           onclick="selecionarPagamento('Cartão de crédito', this)">
+                        <input type="radio" name="pagamento" value="Cartão de crédito">
+                        Cartão de crédito
+                    </label>
+
+                    <label class="opcao-pagamento"
+                           onclick="selecionarPagamento('Cartão de débito', this)">
+                        <input type="radio" name="pagamento" value="Cartão de débito">
+                        Cartão de débito
+                    </label>
+
+                    <label class="opcao-pagamento"
+                           onclick="selecionarPagamento('Dinheiro', this)">
+                        <input type="radio" name="pagamento" value="Dinheiro">
+                        Dinheiro
+                    </label>
+                </div>
+
+                <div class="info-pagamento" id="infoPix">
+                    <strong>Pagamento via Pix</strong>
+
+                    <p>
+                        Faça o Pix para a chave abaixo. Depois, envie o comprovante
+                        ao financeiro pelo WhatsApp.
+                    </p>
+
+                    <div class="pix-chave" id="pixChave">
+                        everton.cezar178@gmail.com
+                    </div>
+
+                    <button class="btn-pix" id="btnPix" onclick="confirmarPix()">
+                        Fiz Pix
+                    </button>
+
+                    <p class="aviso">
+                        Ao clicar em “Fiz Pix”, você declara que realizou o pagamento.
+                        A equipe ainda precisa verificar o comprovante.
+                    </p>
+                </div>
+
+                <div class="info-pagamento" id="infoCartao">
+                    <strong>Pagamento com cartão</strong>
+                    <p>
+                        O pagamento com cartão de crédito ou débito deve ser realizado
+                        no balcão.
+                    </p>
+                </div>
+
+                <div class="info-pagamento" id="infoDinheiro">
+                    <strong>Pagamento em dinheiro</strong>
+                    <p>O pagamento em dinheiro deve ser realizado no balcão.</p>
+                </div>
+            </div>
+
+            <button class="whatsapp" id="btnWhatsApp" onclick="finalizarPedido()">
+                📲 Enviar pedido pelo WhatsApp
+            </button>
+
+            <div class="botoes-modal">
+                <button class="btn-cancelar" onclick="fecharCheckout()">
+                    Cancelar
+                </button>
+
+                <button class="btn-confirmar" onclick="finalizarPedido()">
+                    Finalizar pedido
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* =========================
+           16. CONFIGURAÇÕES
+        ========================= */
+
+        // WhatsApp do financeiro. Altere se o número mudar.
+        const WHATSAPP_FINANCEIRO = '71996538925';
+
+        // Chave Pix do Tigres Food.
+        const PIX_CHAVE = 'everton.cezar178@gmail.com';
+
+        document.getElementById('pixChave').textContent = PIX_CHAVE;
+
+        /* =========================
+           17. PRODUTOS
+        ========================= */
+        const produtos = {
+            1: {
+                id: 1,
+                nome: 'Pastel de frango com catupiry',
+                descricao: 'Frango desfiado com catupiry cremoso.',
+                preco: 13,
+                emoji: '🍗',
+                imagem: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOY4vQn8AAM9iUwv4Y0pxwTRC-FO8nTorFCvkoBdKznjKKnzF97EurxI1Y&s=10'
+            },
+
+            2: {
+                id: 2,
+                nome: 'Pastel de carne com queijo',
+                descricao: 'Carne temperada com queijo derretido.',
+                preco: 13,
+                emoji: '🥩',
+                imagem: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMgS5f1EGPTZEB7yih5-9yZtMybSjIdnzWeJj4DKNCXA&s=10'
+            },
+
+            3: {
+                id: 3,
+                nome: 'Pastel de pizza',
+                descricao: 'Queijo, tomate e orégano. Sem presunto.',
+                preco: 13,
+                emoji: '🍕',
+                imagem: 'https://receitasdelicias.com/wp-content/uploads/2022/02/pastel-de-Pizza.jpg'
+            },
+
+            4: {
+                id: 4,
+                nome: 'Pastel de Nutella',
+                descricao: 'Pastel recheado com Nutella.',
+                preco: 13,
+                emoji: '🍫',
+                imagem: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRx1oWfU4MsRAiNNfxFc8hF8cLj-SRUHy-3Sn8VRG-9nr_mxXbS5JGzwF0&s=10'
+            }
+        };
+
+        let carrinho = [];
+        let pagamentoSelecionado = '';
+        let pixConfirmado = false;
+
+        /* =========================
+           18. FORMATAÇÃO DE PREÇOS
+        ========================= */
+        function formatarMoeda(valor) {
+            return valor.toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            });
+        }
+
+        /* =========================
+           19. MOSTRAR PRODUTOS NA TELA
+        ========================= */
+        function renderizarProdutos() {
+            document.getElementById('produtos').innerHTML =
+                Object.values(produtos).map(p => `
+                    <article class="produto">
+                        <img
+                            src="${p.imagem}"
+                            alt="${p.nome}"
+                            onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div style=&quot;font-size:55px;margin:15px 0&quot;>${p.emoji}</div>')"
+                        >
+
+                        <h3>${p.nome}</h3>
+                        <p>${p.descricao}</p>
+
+                        <div class="preco">${formatarMoeda(p.preco)}</div>
+
+                        <button class="btn-adicionar"
+                                onclick="adicionarProduto(${p.id})">
+                            Adicionar ao pedido
+                        </button>
+                    </article>
+                `).join('');
+        }
+
+        /* =========================
+           20. ADICIONAR E ALTERAR QUANTIDADES
+        ========================= */
+        function adicionarProduto(id) {
+            const item = carrinho.find(i => i.id === id);
+
+            if (item) {
+                item.quantidade++;
+            } else {
+                carrinho.push({
+                    id: id,
+                    quantidade: 1
+                });
+            }
+
+            atualizarCarrinho();
+        }
+
+        function aumentarQuantidade(id) {
+            const item = carrinho.find(i => i.id === id);
+
+            if (item) {
+                item.quantidade++;
+            }
+
+            atualizarCarrinho();
+        }
+
+        function diminuirQuantidade(id) {
+            const item = carrinho.find(i => i.id === id);
+
+            if (!item) return;
+
+            item.quantidade--;
+
+            if (item.quantidade <= 0) {
+                carrinho = carrinho.filter(i => i.id !== id);
+            }
+
+            atualizarCarrinho();
+        }
+
+        function removerProduto(id) {
+            carrinho = carrinho.filter(i => i.id !== id);
+            atualizarCarrinho();
+        }
+
+        /* =========================
+           21. CALCULAR TOTAL E QUANTIDADE
+        ========================= */
+        function calcularTotal() {
+            return carrinho.reduce(
+                (soma, item) => soma + produtos[item.id].preco * item.quantidade,
+                0
+            );
+        }
+
+        function calcularQuantidadeItens() {
+            return carrinho.reduce(
+                (soma, item) => soma + item.quantidade,
+                0
+            );
+        }
+
+        /* =========================
+           22. MONTAR LISTA DO CARRINHO
+        ========================= */
+        function htmlCarrinho() {
+            if (!carrinho.length) {
+                return '<div class="vazio">Seu carrinho está vazio.</div>';
+            }
+
+            return carrinho.map(item => {
+                const produto = produtos[item.id];
+
+                return `
+                    <div class="item-carrinho">
+                        <div class="item-info">
+                            <strong>${produto.emoji} ${produto.nome}</strong>
+                            <span class="item-preco">
+                                ${formatarMoeda(produto.preco * item.quantidade)}
+                            </span>
+                        </div>
+
+                        <div class="quantidade">
+                            <button onclick="diminuirQuantidade(${item.id})"
+                                    aria-label="Diminuir quantidade">−</button>
+
+                            <span>${item.quantidade}</span>
+
+                            <button onclick="aumentarQuantidade(${item.id})"
+                                    aria-label="Aumentar quantidade">+</button>
+                        </div>
+
+                        <button class="btn-remover"
+                                onclick="removerProduto(${item.id})"
+                                aria-label="Remover produto">
+                            🗑
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        /* =========================
+           23. ATUALIZAR O CARRINHO DO TOPO
+        ========================= */
+        function atualizarCarrinho() {
+            document.getElementById('listaCarrinhoPainel').innerHTML =
+                htmlCarrinho();
+
+            document.getElementById('totalPainel').textContent =
+                formatarMoeda(calcularTotal());
+
+            document.getElementById('quantidadeTopo').textContent =
+                calcularQuantidadeItens();
+        }
+
+        /* =========================
+           24. ABRIR E FECHAR O CARRINHO
+        ========================= */
+        function abrirCarrinho() {
+            document.getElementById('overlay').classList.add('aberto');
+            document.getElementById('painelCarrinho').classList.add('aberto');
+        }
+
+        function fecharCarrinho() {
+            document.getElementById('overlay').classList.remove('aberto');
+            document.getElementById('painelCarrinho').classList.remove('aberto');
+        }
+
+        /* =========================
+           25. ABRIR E FECHAR A FINALIZAÇÃO
+        ========================= */
+        function abrirCheckout() {
+            if (!carrinho.length) {
+                alert('Adicione pelo menos um produto ao pedido.');
+                return;
+            }
+
+            fecharCarrinho();
+            document.getElementById('checkoutModal').classList.add('aberto');
+        }
+
+        function fecharCheckout() {
+            document.getElementById('checkoutModal').classList.remove('aberto');
+        }
+
+        /* =========================
+           26. OBSERVAÇÕES DO PEDIDO
+        ========================= */
+        function alterarObservacao() {
+            const check = document.getElementById('nenhuma');
+            const observacao = document.getElementById('observacao');
+
+            observacao.disabled = check.checked;
+
+            if (check.checked) {
+                observacao.value = '';
+            }
+        }
+
+        /* =========================
+           27. SELECIONAR FORMA DE PAGAMENTO
+        ========================= */
+        function selecionarPagamento(pagamento, elemento) {
+            pagamentoSelecionado = pagamento;
+            pixConfirmado = false;
+
+            document.querySelectorAll('.opcao-pagamento').forEach(el => {
+                el.classList.remove('selecionado');
+            });
+
+            elemento.classList.add('selecionado');
+            elemento.querySelector('input').checked = true;
+
+            ['infoPix', 'infoCartao', 'infoDinheiro'].forEach(id => {
+                document.getElementById(id).style.display = 'none';
+            });
+
+            document.getElementById('btnWhatsApp').style.display = 'none';
+
+            document.getElementById('btnPix').classList.remove('confirmado');
+            document.getElementById('btnPix').textContent = 'Fiz Pix';
+
+            if (pagamento === 'Pix') {
+                document.getElementById('infoPix').style.display = 'block';
+            } else if (pagamento.includes('Cartão')) {
+                document.getElementById('infoCartao').style.display = 'block';
+                document.getElementById('btnWhatsApp').style.display = 'block';
+            } else if (pagamento === 'Dinheiro') {
+                document.getElementById('infoDinheiro').style.display = 'block';
+                document.getElementById('btnWhatsApp').style.display = 'block';
+            }
+        }
+
+        /* =========================
+           28. CONFIRMAÇÃO DO PIX PELO CLIENTE
+        ========================= */
+        function confirmarPix() {
+            pixConfirmado = true;
+
+            document.getElementById('btnPix').classList.add('confirmado');
+
+            document.getElementById('btnPix').textContent =
+                '✓ Pix marcado como realizado';
+
+            document.getElementById('btnWhatsApp').style.display = 'block';
+        }
+
+        /* =========================
+           29. VALIDAR OS DADOS DO CLIENTE
+        ========================= */
+        function validarFormulario() {
+            const nome = document.getElementById('nome').value.trim();
+            const whatsapp = document.getElementById('whatsapp').value.trim();
+            const mesa = document.getElementById('mesa').value.trim();
+
+            if (!nome) {
+                alert('Digite seu nome completo.');
+                return false;
+            }
+
+            if (!whatsapp) {
+                alert('Digite seu WhatsApp.');
+                return false;
+            }
+
+            if (!mesa) {
+                alert('Digite o número da mesa.');
+                return false;
+            }
+
+            if (!pagamentoSelecionado) {
+                alert('Selecione uma forma de pagamento.');
+                return false;
+            }
+
+            if (pagamentoSelecionado === 'Pix' && !pixConfirmado) {
+                alert('Para Pix, realize o pagamento e clique em “Fiz Pix” antes de finalizar.');
+                return false;
+            }
+
+            return true;
+        }
+
+        /* =========================
+           30. ENVIAR O PEDIDO PELO WHATSAPP
+        ========================= */
+        function finalizarPedido() {
+            if (!validarFormulario()) return;
+
+            const nome = document.getElementById('nome').value.trim();
+            const whatsapp = document.getElementById('whatsapp').value.trim();
+            const mesa = document.getElementById('mesa').value.trim();
+
+            const nenhuma = document.getElementById('nenhuma').checked;
+            const obs = document.getElementById('observacao').value.trim();
+
+            const observacaoFinal =
+                nenhuma || !obs ? 'Nenhuma' : obs;
+
+            let mensagem =
+                'Olá! Gostaria de fazer um pedido no Tigres Food:\n\n';
+
+            carrinho.forEach(item => {
+                const produto = produtos[item.id];
+
+                mensagem +=
+                    `• ${produto.nome} | Quantidade: ${item.quantidade} | ${formatarMoeda(produto.preco * item.quantidade)}\n`;
+            });
+
+            mensagem +=
+                `\nTotal: ${formatarMoeda(calcularTotal())}` +
+                `\n\nNome: ${nome}` +
+                `\nWhatsApp: ${whatsapp}` +
+                `\nMesa: ${mesa}` +
+                `\nPagamento: ${pagamentoSelecionado}` +
+                `\nObservação: ${observacaoFinal}`;
+
+            if (pagamentoSelecionado === 'Pix') {
+                mensagem +=
+                    '\n\nCliente marcou o Pix como realizado. Comprovante deve ser conferido pelo financeiro.';
+            } else {
+                mensagem += '\n\nPagamento será realizado no balcão.';
+            }
+
+            const url =
+                'https://wa.me/' +
+                WHATSAPP_FINANCEIRO +
+                '?text=' +
+                encodeURIComponent(mensagem);
+
+            window.open(url, '_blank', 'noopener');
+
+            fecharCheckout();
+
+            document.getElementById('pedidoEnviado').style.display = 'block';
+
+            document.getElementById('pedidoEnviado').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        /* =========================
+           31. FECHAR JANELAS COM ESC
+        ========================= */
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                fecharCarrinho();
+                fecharCheckout();
+            }
+        });
+
+        /* =========================
+           32. INICIAR O SITE
+        ========================= */
+        renderizarProdutos();
+        atualizarCarrinho();
+    </script>
+
+</body>
+</html>
