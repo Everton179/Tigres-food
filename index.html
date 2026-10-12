@@ -654,8 +654,15 @@
 
             <div class="campo">
                 <label for="mesa">Número da mesa</label>
-                <input id="mesa" type="number" placeholder="Ex: 5"
-                       min="1" max="10" step="1" required>
+                <input
+    type="text"
+    id="mesa"
+    placeholder="Ex: 1 a 10"
+    inputmode="numeric"
+    maxlength="2"
+    oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 2)"
+    required
+>
             </div>
 
             <div class="pagamento">
