@@ -696,19 +696,10 @@
 
             <div class="campo">
                 <label for="mesa">Número da mesa</label>
-                <input id="mesa" type="text" placeholder="Ex.: 5">
+                <input type="number" id="mesa" placeholder="Ex.: 5" min="1" max="15" step="1" required>
             </div>
 
-            <div class="campo">
-                <label for="observacao">Observação do pedido</label>
-                <textarea id="observacao"
-                          placeholder="Ex.: sem orégano, pouco molho..."></textarea>
-
-                <label class="checkbox">
-                    <input type="checkbox" id="nenhuma" onchange="alterarObservacao()">
-                    Nenhuma observação
-                </label>
-            </div>
+    
 
             <!-- =========================
                  15. OPÇÕES DE PAGAMENTO
