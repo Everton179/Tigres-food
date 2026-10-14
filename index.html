@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -547,6 +548,20 @@
             line-height: 1.4;
         }
 
+        /* BOTÃO FAZER OUTRO PEDIDO */
+        .btn-outro-pedido {
+            background: var(--azul);
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 10px;
+            margin-top: 18px;
+            font-size: 16px;
+        }
+
+        .btn-outro-pedido:hover {
+            background: var(--azul-escuro);
+        }
+
         /* CELULAR */
         @media (max-width: 750px) {
             .produtos {
@@ -608,23 +623,25 @@
 
         <section class="produtos" id="produtos"></section>
 
-       
+        <section class="pedido-enviado" id="pedidoEnviado">
+            <h2>🐯 Obrigado por pedir no Tigres Food! 💙</h2>
 
-<section class="pedido-enviado" id="pedidoEnviado">
-    <h2>🐯 Obrigado por pedir no Tigres Food! 💙</h2>
+            <div class="cozinha">
+                Agora é só aguardar seu pedido!
+            </div>
 
-    <div class="cozinha">
-        Agora é só aguardar seu pedido!
-    </div>
+            <p style="margin-top: 15px;">
+                😋 Quer pedir mais pastéis?
+            </p>
 
-    <p>😋 Quer pedir mais pastéis?</p>
-
-    <button type="button" onclick="document.getElementById('pedidoEnviado').style.display='none'; document.getElementById('cardapio').scrollIntoView({ behavior: 'smooth' });">
-        🛒 Fazer outro pedido
-    </button>
-</section>
-
-        
+            <button
+                type="button"
+                class="btn-outro-pedido"
+                onclick="document.getElementById('pedidoEnviado').style.display='none'; document.getElementById('produtos').scrollIntoView({ behavior: 'smooth' });"
+            >
+                🛒 Fazer outro pedido
+            </button>
+        </section>
     </main>
 
     <div class="overlay" id="overlay" onclick="fecharCarrinho()"></div>
@@ -1201,9 +1218,8 @@
                 encodeURIComponent(mensagem);
 
             /*
-             * ALTERAÇÃO:
-             * Usa um link real para abrir o WhatsApp em outra aba,
-             * em vez de window.open(), que pode gerar about:blank.
+             * Abre o WhatsApp em outra aba usando um link real,
+             * evitando a criação de uma aba about:blank.
              */
 
             const linkWhatsApp = document.createElement('a');
