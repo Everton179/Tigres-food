@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -1202,12 +1201,21 @@
                 '?text=' +
                 encodeURIComponent(mensagem);
 
-            const janelaWhatsApp = window.open(url, '_blank');
+            /*
+             * ALTERAÇÃO:
+             * Usa um link real para abrir o WhatsApp em outra aba,
+             * em vez de window.open(), que pode gerar about:blank.
+             */
 
-            if (!janelaWhatsApp) {
-                window.location.href = url;
-                return;
-            }
+            const linkWhatsApp = document.createElement('a');
+
+            linkWhatsApp.href = url;
+            linkWhatsApp.target = '_blank';
+            linkWhatsApp.rel = 'noopener noreferrer';
+
+            document.body.appendChild(linkWhatsApp);
+            linkWhatsApp.click();
+            linkWhatsApp.remove();
 
             fecharCheckout();
 
