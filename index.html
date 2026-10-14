@@ -609,13 +609,21 @@
         <section class="produtos" id="produtos"></section>
 
        
+
 <section class="pedido-enviado" id="pedidoEnviado">
     <h2>🐯 Obrigado por pedir no Tigres Food! 💙</h2>
 
     <div class="cozinha">
         Agora é só aguardar seu pedido!
     </div>
+
+    <p>😋 Quer pedir mais pastéis?</p>
+
+    <button type="button" onclick="document.getElementById('pedidoEnviado').style.display='none'; document.getElementById('cardapio').scrollIntoView({ behavior: 'smooth' });">
+        🛒 Fazer outro pedido
+    </button>
 </section>
+
         
     </main>
 
