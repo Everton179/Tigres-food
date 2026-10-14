@@ -421,19 +421,46 @@
             color: var(--azul-escuro);
         }
 
+        /* CHAVE PIX CLICÁVEL */
         .pix-chave {
-        border: 2px solid black;
+            border: 2px solid #00a650;
             margin: 10px 0;
-            padding: 10px;
-            background: #fff;
+            padding: 14px 10px;
+            background: #ffffff;
             border-radius: 8px;
-            word-break: break-all;
+            word-break: break-word;
+            font-weight: bold;
+            text-align: center;
+            font-size: 20px;
+            color: #111111;
+            cursor: pointer;
+            transition: .2s;
+            user-select: all;
+        }
+
+        .pix-chave:hover {
+            background: #eafff0;
+            border-color: #00883f;
+            transform: scale(1.01);
+        }
+
+        .pix-chave:focus-visible {
+            outline: 3px solid #00a650;
+            outline-offset: 3px;
+        }
+
+        .mensagem-copia-pix {
+            text-align: center;
+            font-size: 13px;
+            color: #00883f;
+            margin-top: 5px;
+            margin-bottom: 8px;
             font-weight: bold;
         }
 
         .btn-pix {
-        border: 2px solid black;
-            background:green;
+            border: 2px solid black;
+            background: green;
             color: #fff;
             padding: 11px 15px;
             border-radius: 8px;
@@ -445,7 +472,7 @@
         }
 
         .whatsapp {
-        border: 2px solid black;
+            border: 2px solid black;
             display: none;
             background: var(--verde);
             color: #fff;
@@ -635,34 +662,47 @@
 
             <div class="campo">
                 <label for="nome">Nome completo</label>
-                <input id="nome" type="text" autocomplete="name"
-                       placeholder="Digite seu nome completo" required>
+
+                <input
+                    type="text"
+                    id="nome"
+                    placeholder="Digite seu nome completo"
+                    required
+                    minlength="15"
+                    maxlength="50"
+                    pattern="[A-Za-zÀ-ÿ\s]+"
+                    title="Digite seu nome completo usando apenas letras e espaços, com no mínimo 15 e no máximo 50 caracteres."
+                    oninput="this.value = this.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '').slice(0, 50)"
+                >
             </div>
 
             <div class="campo">
                 <label for="whatsapp">Seu WhatsApp</label>
                 <input
-    type="tel"
-    id="whatsapp"
-    placeholder="Ex: (11)987161366"
-    inputmode="numeric"
-    maxlength="11"
-    oninput="this.value = this.value.replace(/\D/g, '').slice(0, 11)"
-    required
->
+                    type="tel"
+                    id="whatsapp"
+                    placeholder="Ex: (11)987161366"
+                    inputmode="numeric"
+                    maxlength="11"
+                    oninput="this.value = this.value.replace(/\D/g, '').slice(0, 11)"
+                    required
+                >
             </div>
 
             <div class="campo">
                 <label for="mesa">Número da mesa</label>
+
                 <input
-    type="text"
-    id="mesa"
-    placeholder="Ex: 1 a 10"
-    inputmode="numeric"
-    maxlength="2"
-    oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 2)"
-    required
->
+                    type="text"
+                    id="mesa"
+                    placeholder="Digite de 1 a 6"
+                    inputmode="numeric"
+                    maxlength="1"
+                    pattern="[1-6]"
+                    title="Digite um número de mesa entre 1 e 6."
+                    oninput="this.value = this.value.replace(/[^1-6]/g, '').slice(0, 1)"
+                    required
+                >
             </div>
 
             <div class="pagamento">
@@ -679,14 +719,7 @@
                            onclick="selecionarPagamento('Cartão de crédito', this)">
                         <input type="radio" name="pagamento"
                                value="Cartão de crédito">
-                        Cartão de crédito
-                    </label>
-
-                    <label class="opcao-pagamento"
-                           onclick="selecionarPagamento('Cartão de débito', this)">
-                        <input type="radio" name="pagamento"
-                               value="Cartão de débito">
-                        Cartão de débito
+                        Cartão
                     </label>
 
                     <label class="opcao-pagamento"
@@ -697,15 +730,45 @@
                 </div>
 
                 <div class="info-pagamento" id="infoPix">
-                    <strong>Pagamento via Pix</strong>
+                    <strong>💠 Pagamento via Pix</strong>
 
-                    <p>Faça o Pix para a chave abaixo e clique em “Fiz Pix” 
-                        para liberar o envio do pedido pelo WhatsApp.
+                    <p>
+                        Após concluir o pagamento,
+                        clique em “Fiz Pix” para continuar e enviar seu pedido pelo WhatsApp.
                     </p>
 
-                    <div class="pix-chave" id="pixChave">
-                                   11987160280
-                    </div>
+                    <p style="margin-top: 12px; text-align: center;">
+                        <strong>Copie a chave Pix (celular) abaixo.</strong>
+                        <span style="font-size: 28px; color: #00a650; font-weight: bold;">⬇️</span>
+                    </p>
+
+                    <div
+                        class="pix-chave"
+                        id="pixChave"
+                        role="button"
+                        tabindex="0"
+                        aria-label="Clique para copiar a chave Pix"
+                        title="Clique para copiar a chave Pix"
+                        onclick="copiarChavePix()"
+                        onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); copiarChavePix(); }"
+                    ></div>
+
+                    <p class="mensagem-copia-pix" id="mensagemCopiaPix" aria-live="polite">
+                        👆 Toque no número para copiar a chave Pix
+                    </p>
+
+                    <p style="margin-top: 12px;">
+                        <strong>Banco:</strong> Mercado Pago
+                    </p>
+
+                    <p>
+                        <strong>Titular:</strong> Kimberllyn Jhoyssy
+                    </p>
+
+                    <p class="aviso">
+                        Copie a chave e use no aplicativo do seu banco.
+                        Antes de confirmar, confira se o nome do favorecido está correto.
+                    </p>
 
                     <button type="button" class="btn-pix" id="btnPix"
                             onclick="confirmarPix()">
@@ -720,17 +783,18 @@
 
                 <div class="info-pagamento" id="infoCartao">
                     <strong>Pagamento com cartão</strong>
+
                     <p>
-                        O pagamento será feito na mesa, com a maquininha.
-                        Envie o pedido pelo whats para o garçom vir até você.
+                        Antes de enviar seu pedido pelo WhatsApp,
+                        faça o pagamento com cartão no balcão.
                     </p>
                 </div>
 
                 <div class="info-pagamento" id="infoDinheiro">
                     <strong>Pagamento em dinheiro</strong>
                     <p>
-                        O pagamento será feito na mesa.
-                         Envie o pedido pelo whats para o garçom vir até você.
+                        Antes de enviar seu pedido pelo WhatsApp,
+                        faça o pagamento no balcão.
                     </p>
                 </div>
             </div>
@@ -752,13 +816,44 @@
     <script>
         /* CONFIGURAÇÕES */
 
-        // Número do financeiro com código do país 55.
-        // Confira se este é realmente o número correto.
-        const WHATSAPP_FINANCEIRO = '5511987160280';
+        const WHATSAPP_FINANCEIRO = '5571996538925';
 
         const PIX_CHAVE = '11987160280';
 
         document.getElementById('pixChave').textContent = PIX_CHAVE;
+
+        /* COPIAR CHAVE PIX */
+
+        async function copiarChavePix() {
+            const chave = PIX_CHAVE;
+            const mensagem = document.getElementById('mensagemCopiaPix');
+
+            try {
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(chave);
+                } else {
+                    // Alternativa para navegadores que não oferecem Clipboard API.
+                    const campoTemporario = document.createElement('textarea');
+                    campoTemporario.value = chave;
+                    campoTemporario.setAttribute('readonly', '');
+                    campoTemporario.style.position = 'fixed';
+                    campoTemporario.style.opacity = '0';
+                    document.body.appendChild(campoTemporario);
+                    campoTemporario.select();
+
+                    const copiou = document.execCommand('copy');
+                    document.body.removeChild(campoTemporario);
+
+                    if (!copiou) {
+                        throw new Error('Não foi possível copiar a chave.');
+                    }
+                }
+
+                mensagem.textContent = '✅ Chave Pix copiada! Agora é só colar no aplicativo do banco.';
+            } catch (erro) {
+                mensagem.textContent = 'Não foi possível copiar automaticamente. Pressione e selecione o número para copiá-lo.';
+            }
+        }
 
         /* PRODUTOS */
 
@@ -782,7 +877,7 @@
             3: {
                 id: 3,
                 nome: 'Pastel de pizza',
-                descricao: 'Queijo, tomate e orégano. Sem presunto.',
+                descricao: 'Queijo, tomate e orégano.',
                 preco: 13,
                 emoji: '🍕',
                 imagem: 'https://receitasdelicias.com/wp-content/uploads/2022/02/pastel-de-Pizza.jpg'
@@ -1011,9 +1106,12 @@
         /* VALIDAR FORMULÁRIO */
 
         function validarFormulario() {
-            const nome = document.getElementById('nome').value.trim();
-            const whatsapp = document.getElementById('whatsapp').value.trim();
+            const campoNome = document.getElementById('nome');
+            const campoWhatsApp = document.getElementById('whatsapp');
             const campoMesa = document.getElementById('mesa');
+
+            const nome = campoNome.value.trim();
+            const whatsapp = campoWhatsApp.value.trim();
             const mesa = campoMesa.value.trim();
 
             if (!carrinho.length) {
@@ -1021,13 +1119,21 @@
                 return false;
             }
 
-            if (!nome) {
-                alert('Digite seu nome completo.');
+            if (nome.length < 15 || nome.length > 50) {
+                alert('Digite seu nome completo, com no mínimo 15 e no máximo 50 caracteres.');
+                campoNome.focus();
+                return false;
+            }
+
+            if (!/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/.test(nome)) {
+                alert('O nome deve conter apenas letras e espaços, sem números ou símbolos.');
+                campoNome.focus();
                 return false;
             }
 
             if (!whatsapp) {
                 alert('Digite seu WhatsApp.');
+                campoWhatsApp.focus();
                 return false;
             }
 
@@ -1040,8 +1146,8 @@
             const numeroMesa = Number(mesa);
 
             if (!Number.isInteger(numeroMesa) ||
-                numeroMesa < 1 || numeroMesa > 10) {
-                alert('Informe uma mesa válida, de 1 a 10.');
+                numeroMesa < 1 || numeroMesa > 6) {
+                alert('Informe uma mesa válida, de 1 a 6.');
                 campoMesa.focus();
                 return false;
             }
@@ -1084,21 +1190,10 @@
                 `\n\nNome: ${nome}` +
                 `\nWhatsApp: ${whatsapp}` +
                 `\nMesa: ${mesa}` +
-                `\nPagamento: ${pagamentoSelecionado}` +
-                '\nObservação: Nenhuma';
+                `\nPagamento: ${pagamentoSelecionado.includes('Cartão') ? 'Cartão' : pagamentoSelecionado}`;
 
             if (pagamentoSelecionado === 'Pix') {
-                mensagem +=
-                    '\n\nCliente marcou o Pix como realizado. ' +
-                    'O comprovante precisa ser conferido pelo financeiro.';
-            } else if (pagamentoSelecionado.includes('Cartão')) {
-                mensagem +=
-                    '\n\nPagamento com cartão na mesa, com a maquininha.' +
-                    '\nFavor enviar o garçom após receber o pedido.';
-            } else {
-                mensagem +=
-                    '\n\nPagamento em dinheiro na mesa.' +
-                    '\nFavor enviar o garçom após receber o pedido.';
+                mensagem += '\n\nO comprovante precisa ser conferido.';
             }
 
             const url =
@@ -1107,11 +1202,9 @@
                 '?text=' +
                 encodeURIComponent(mensagem);
 
-            // Abrir o WhatsApp com a mensagem preenchida.
             const janelaWhatsApp = window.open(url, '_blank');
 
             if (!janelaWhatsApp) {
-                // Alternativa se o navegador bloquear a nova janela.
                 window.location.href = url;
                 return;
             }
