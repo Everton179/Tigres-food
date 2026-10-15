@@ -68,10 +68,27 @@
             font-weight: bold;
         }
 
-        .logo p {
-            margin-top: 4px;
-            color: #eceaea;
-            font-size: 13px;
+        .botoes-topo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* BOTÃO DE AJUDA EM DESTAQUE */
+        .btn-ajuda-topo {
+            background: rgb(254, 254, 254);
+            color: #111010;
+            border: 2px solid #fff;
+            padding: 12px 16px;
+            border-radius: 11px;
+            white-space: nowrap;
+            box-shadow: 0 3px 8px #0003;
+        }
+
+        .btn-ajuda-topo:hover {
+            background: #090909;
+            color: white;
+            transform: translateY(-2px);
         }
 
         .btn-carrinho-topo {
@@ -86,6 +103,134 @@
             border: 3px solid #111;
             color: #f1f1f1;
             background: rgb(14, 14, 14);
+        }
+
+        /* JANELA DE AJUDA */
+        .modal-ajuda {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: #000a;
+            align-items: center;
+            justify-content: center;
+            padding: 14px;
+        }
+
+        .modal-ajuda.aberto {
+            display: flex;
+        }
+
+        .ajuda-conteudo {
+            background: #f0eeee;
+            width: 100%;
+            max-width: 550px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 3px solid #111;
+            border-radius: 18px;
+            box-shadow: 0 10px 35px #0005;
+            padding: 24px;
+            position: relative;
+        }
+
+        .ajuda-topo {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding-bottom: 15px;
+            margin-bottom: 18px;
+            border-bottom: 3px solid var(--azul);
+        }
+
+        .ajuda-topo h2 {
+            color: var(--azul-escuro);
+            font-size: 23px;
+        }
+
+        .btn-fechar-ajuda {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 9px;
+            background: #e33e3e;
+            color: #fff;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-fechar-ajuda:hover {
+            background: rgb(231, 4, 4);
+        }
+
+        .ajuda-etapa {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 17px;
+        }
+
+        .ajuda-numero {
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--azul);
+            color: #fff;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ajuda-texto {
+            line-height: 1.5;
+            font-size: 15px;
+        }
+
+        .ajuda-texto strong {
+            color: var(--azul-escuro);
+        }
+
+        .ajuda-dica {
+            background: #e8f6ff;
+            border-left: 5px solid var(--azul);
+            border-radius: 8px;
+            padding: 13px;
+            margin: 18px 0;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .ajuda-atendente {
+            background: #f0efff;
+            border: 2px solid var(--roxo);
+            border-radius: 10px;
+            padding: 15px;
+            line-height: 1.5;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .ajuda-atendente strong {
+            color: var(--roxo);
+        }
+
+        .btn-entendi {
+            width: 100%;
+            padding: 14px;
+            margin-top: 18px;
+            border-radius: 10px;
+            background: var(--azul-escuro);
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .btn-entendi:hover {
+            background: #111;
         }
 
         /* CONTEÚDO */
@@ -418,7 +563,7 @@
         }
 
         .info-pagamento strong {
-            color: var(--azul-escuro);
+            color: rgb(8, 8, 214);
         }
 
         /* CHAVE PIX CLICÁVEL */
@@ -440,7 +585,7 @@
 
         .pix-chave:hover {
             background: #eafff0;
-            border-color: #00883f;
+            border-color: #01b735;
             transform: scale(1.01);
         }
 
@@ -451,7 +596,7 @@
 
         .mensagem-copia-pix {
             text-align: center;
-            font-size: 13px;
+            font-size: 18px;
             color: #00883f;
             margin-top: 5px;
             margin-bottom: 8px;
@@ -459,6 +604,7 @@
         }
 
         .btn-pix {
+            display: none;
             border: 2px solid black;
             background: green;
             color: #fff;
@@ -562,8 +708,49 @@
             background: var(--azul-escuro);
         }
 
+        /* TELA DE AGRADECIMENTO */
+        body.pedido-concluido header,
+        body.pedido-concluido .hero,
+        body.pedido-concluido #produtos,
+        body.pedido-concluido .overlay,
+        body.pedido-concluido .painel-carrinho,
+        body.pedido-concluido .modal,
+        body.pedido-concluido .modal-ajuda {
+            display: none !important;
+        }
+
+        body.pedido-concluido .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 40px auto;
+        }
+
+        body.pedido-concluido .pedido-enviado {
+            display: block;
+            margin-top: 0;
+        }
+
         /* CELULAR */
         @media (max-width: 750px) {
+            header {
+                padding: 12px 3%;
+                gap: 8px;
+            }
+
+            .logo h1 {
+                font-size: 19px;
+            }
+
+            .botoes-topo {
+                gap: 6px;
+            }
+
+            .btn-ajuda-topo,
+            .btn-carrinho-topo {
+                padding: 10px 9px;
+                font-size: 13px;
+            }
+
             .produtos {
                 grid-template-columns: 1fr;
             }
@@ -596,8 +783,33 @@
                 grid-template-columns: 1fr;
             }
 
+            .ajuda-conteudo {
+                padding: 17px;
+                max-height: 88vh;
+            }
+
+            .ajuda-topo h2 {
+                font-size: 20px;
+            }
+
+            .ajuda-texto {
+                font-size: 14px;
+            }
+
             .logo p {
                 max-width: 200px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .logo h1 {
+                font-size: 16px;
+            }
+
+            .btn-ajuda-topo,
+            .btn-carrinho-topo {
+                padding: 9px 7px;
+                font-size: 12px;
             }
         }
     </style>
@@ -610,10 +822,105 @@
             <h1>🐯 Tigres Food</h1>
         </div>
 
-        <button class="btn-carrinho-topo" onclick="abrirCarrinho()">
-            🛒 Carrinho (<span id="quantidadeTopo">0</span>)
-        </button>
+        <div class="botoes-topo">
+            <button
+                type="button"
+                class="btn-ajuda-topo"
+                onclick="abrirAjuda()"
+                aria-label="Abrir ajuda para fazer o pedido"
+            >
+                <span style="color: #1fd10b; font-size: 15px; font-weight: bold;">?</span> Ajuda
+            </button>
+
+            <button class="btn-carrinho-topo" onclick="abrirCarrinho()">
+                🛒 Carrinho (<span id="quantidadeTopo">0</span>)
+            </button>
+        </div>
     </header>
+
+    <!-- JANELA DE AJUDA -->
+    <div
+        class="modal-ajuda"
+        id="modalAjuda"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="tituloAjuda"
+        onclick="fecharAjudaFora(event)"
+    >
+        <div class="ajuda-conteudo">
+            <div class="ajuda-topo">
+                <h2 id="tituloAjuda">❔ Como fazer meu pedido?</h2>
+
+                <button
+                    type="button"
+                    class="btn-fechar-ajuda"
+                    onclick="fecharAjuda()"
+                    aria-label="Fechar janela de ajuda"
+                    title="Fechar ajuda"
+                >
+                    X
+                </button>
+            </div>
+
+            <div class="ajuda-etapa">
+                <div class="ajuda-numero">1</div>
+                <div class="ajuda-texto">
+                    <strong>Escolha seus pastéis</strong>
+                    <p>Clique em “Adicionar ao pedido” nos sabores desejados.</p>
+                </div>
+            </div>
+
+            <div class="ajuda-etapa">
+                <div class="ajuda-numero">2</div>
+                <div class="ajuda-texto">
+                    <strong>Confira seu pedido</strong>
+                    <p>Abra o carrinho, confira os itens, as quantidades e o valor total. Depois, clique em “Continuar”.</p>
+                </div>
+            </div>
+
+            <div class="ajuda-etapa">
+                <div class="ajuda-numero">3</div>
+                <div class="ajuda-texto">
+                    <strong>Preencha seus dados</strong>
+                    <p>Informe seu nome completo, WhatsApp com DDD (11 números) e número da mesa.</p>
+                </div>
+            </div>
+
+            <div class="ajuda-etapa">
+                <div class="ajuda-numero">4</div>
+                <div class="ajuda-texto">
+                    <strong>Escolha como pagar</strong>
+                    <p><strong>Pix:</strong> copie a chave, faça o pagamento no aplicativo do banco e clique em “Fiz Pix”.</p>
+                    <p style="margin-top: 7px;"><strong>Cartão ou dinheiro:</strong> realize o pagamento no balcão antes de enviar o pedido.</p>
+                </div>
+            </div>
+
+            <div class="ajuda-etapa">
+                <div class="ajuda-numero">5</div>
+                <div class="ajuda-texto">
+                    <strong>Envie seu pedido</strong>
+                    <p>Clique em “Enviar pedido pelo WhatsApp”, confira a mensagem e envie para nossa equipe. Aguarde a confirmação.</p>
+                </div>
+            </div>
+
+            <div class="ajuda-dica">
+                💡 <strong>Dica:</strong> antes de enviar, confira os sabores, as quantidades e o valor total do pedido.
+            </div>
+
+            <div class="ajuda-atendente">
+                <strong>🙋 Precisa de ajuda?</strong>
+                <p>Se precisar de um atendente, dirija-se ao <strong>balcão de pagamento</strong>. Nossa equipe estará pronta para ajudar!</p>
+            </div>
+
+            <button
+                type="button"
+                class="btn-entendi"
+                onclick="fecharAjuda()"
+            >
+                Entendi, vamos pedir!
+            </button>
+        </div>
+    </div>
 
     <main class="container">
         <section class="hero">
@@ -637,7 +944,7 @@
             <button
                 type="button"
                 class="btn-outro-pedido"
-                onclick="document.getElementById('pedidoEnviado').style.display='none'; document.getElementById('produtos').scrollIntoView({ behavior: 'smooth' });"
+                onclick="fazerNovoPedido()"
             >
                 🛒 Fazer outro pedido
             </button>
@@ -696,12 +1003,15 @@
                 <input
                     type="tel"
                     id="whatsapp"
-                    placeholder="Ex: (11)987161366"
+                    placeholder="Ex: 11987161366"
                     inputmode="numeric"
                     maxlength="11"
+                    pattern="[0-9]{11}"
+                    title="Digite o WhatsApp com DDD, contendo exatamente 11 números."
                     oninput="this.value = this.value.replace(/\D/g, '').slice(0, 11)"
                     required
                 >
+                <p class="aviso">Digite o DDD e o número do celular, totalizando 11 dígitos.</p>
             </div>
 
             <div class="campo">
@@ -748,15 +1058,11 @@
                     <strong>💠 Pagamento via Pix</strong>
 
                     <p>
-                        Após concluir o pagamento,
-                        clique em “Fiz Pix” para continuar e enviar seu pedido pelo WhatsApp.
+                        Copie a chave Pix, faça o pagamento no aplicativo
+                        do seu banco e depois clique em “Fiz Pix”.
                     </p>
 
-                    <p style="margin-top: 12px; text-align: center;">
-                        <strong>Copie a chave Pix (celular) abaixo.</strong>
-                        <span style="font-size: 28px; color: #00a650; font-weight: bold;">⬇️</span>
-                    </p>
-
+            
                     <div
                         class="pix-chave"
                         id="pixChave"
@@ -792,7 +1098,7 @@
 
                     <p class="aviso">
                         Ao clicar em “Fiz Pix”, você declara que realizou o pagamento.
-                        A equipe ainda precisa verificar o comprovante.
+                        A equipe ainda precisa verificar o recebimento.
                     </p>
                 </div>
 
@@ -816,7 +1122,7 @@
 
             <button type="button" class="whatsapp" id="btnWhatsApp"
                     onclick="finalizarPedido()">
-                📲 Enviar pedido pelo WhatsApp
+                📲 Concluir pedido pelo WhatsApp
             </button>
 
             <div class="botoes-modal">
@@ -832,27 +1138,50 @@
         /* CONFIGURAÇÕES */
 
         const WHATSAPP_FINANCEIRO = '5571996538925';
-
         const PIX_CHAVE = '11987160280';
 
         document.getElementById('pixChave').textContent = PIX_CHAVE;
+
+        /* JANELA DE AJUDA */
+
+        function abrirAjuda() {
+            document.getElementById('modalAjuda').classList.add('aberto');
+            document.body.style.overflow = 'hidden';
+            document.getElementById('modalAjuda').querySelector('.btn-fechar-ajuda').focus();
+        }
+
+        function fecharAjuda() {
+            document.getElementById('modalAjuda').classList.remove('aberto');
+            document.body.style.overflow = '';
+        }
+
+        function fecharAjudaFora(event) {
+            if (event.target.id === 'modalAjuda') {
+                fecharAjuda();
+            }
+        }
+
+        /* ESTADO DO PIX */
+
+        let chavePixCopiada = false;
 
         /* COPIAR CHAVE PIX */
 
         async function copiarChavePix() {
             const chave = PIX_CHAVE;
             const mensagem = document.getElementById('mensagemCopiaPix');
+            const botaoPix = document.getElementById('btnPix');
 
             try {
                 if (navigator.clipboard && window.isSecureContext) {
                     await navigator.clipboard.writeText(chave);
                 } else {
-                    // Alternativa para navegadores que não oferecem Clipboard API.
                     const campoTemporario = document.createElement('textarea');
                     campoTemporario.value = chave;
                     campoTemporario.setAttribute('readonly', '');
                     campoTemporario.style.position = 'fixed';
                     campoTemporario.style.opacity = '0';
+
                     document.body.appendChild(campoTemporario);
                     campoTemporario.select();
 
@@ -864,9 +1193,20 @@
                     }
                 }
 
-                mensagem.textContent = '✅ Chave Pix copiada! Agora é só colar no aplicativo do banco.';
+                chavePixCopiada = true;
+
+                mensagem.textContent =
+                    '✅ Pix copiado! Retorne aqui após o pagamento.';
+
+                botaoPix.style.display = 'inline-block';
+
             } catch (erro) {
-                mensagem.textContent = 'Não foi possível copiar automaticamente. Pressione e selecione o número para copiá-lo.';
+                chavePixCopiada = false;
+                botaoPix.style.display = 'none';
+
+                mensagem.textContent =
+                    'Não foi possível copiar automaticamente. ' +
+                    'Tente novamente ou selecione o número para copiá-lo.';
             }
         }
 
@@ -1080,6 +1420,7 @@
         function selecionarPagamento(pagamento, elemento) {
             pagamentoSelecionado = pagamento;
             pixConfirmado = false;
+            chavePixCopiada = false;
 
             document.querySelectorAll('.opcao-pagamento').forEach(el => {
                 el.classList.remove('selecionado');
@@ -1094,8 +1435,13 @@
 
             document.getElementById('btnWhatsApp').style.display = 'none';
 
-            document.getElementById('btnPix').classList.remove('confirmado');
-            document.getElementById('btnPix').textContent = 'Fiz Pix';
+            const botaoPix = document.getElementById('btnPix');
+            botaoPix.style.display = 'none';
+            botaoPix.classList.remove('confirmado');
+            botaoPix.textContent = 'Fiz Pix';
+
+            document.getElementById('mensagemCopiaPix').textContent =
+                '👆 Toque no número para copiar a chave Pix';
 
             if (pagamento === 'Pix') {
                 document.getElementById('infoPix').style.display = 'block';
@@ -1109,6 +1455,11 @@
         }
 
         function confirmarPix() {
+            if (!chavePixCopiada) {
+                alert('Primeiro copie a chave Pix.');
+                return;
+            }
+
             pixConfirmado = true;
 
             document.getElementById('btnPix').classList.add('confirmado');
@@ -1126,7 +1477,7 @@
             const campoMesa = document.getElementById('mesa');
 
             const nome = campoNome.value.trim();
-            const whatsapp = campoWhatsApp.value.trim();
+            const whatsapp = campoWhatsApp.value.replace(/\D/g, '');
             const mesa = campoMesa.value.trim();
 
             if (!carrinho.length) {
@@ -1146,8 +1497,8 @@
                 return false;
             }
 
-            if (!whatsapp) {
-                alert('Digite seu WhatsApp.');
+            if (whatsapp.length !== 11) {
+                alert('Digite seu WhatsApp com DDD, contendo exatamente 11 números.');
                 campoWhatsApp.focus();
                 return false;
             }
@@ -1172,6 +1523,11 @@
                 return false;
             }
 
+            if (pagamentoSelecionado === 'Pix' && !chavePixCopiada) {
+                alert('Copie a chave Pix antes de continuar.');
+                return false;
+            }
+
             if (pagamentoSelecionado === 'Pix' && !pixConfirmado) {
                 alert('Realize o Pix e clique em “Fiz Pix” antes de finalizar.');
                 return false;
@@ -1186,7 +1542,7 @@
             if (!validarFormulario()) return;
 
             const nome = document.getElementById('nome').value.trim();
-            const whatsapp = document.getElementById('whatsapp').value.trim();
+            const whatsapp = document.getElementById('whatsapp').value.replace(/\D/g, '');
             const mesa = document.getElementById('mesa').value.trim();
 
             let mensagem =
@@ -1217,11 +1573,6 @@
                 '?text=' +
                 encodeURIComponent(mensagem);
 
-            /*
-             * Abre o WhatsApp em outra aba usando um link real,
-             * evitando a criação de uma aba about:blank.
-             */
-
             const linkWhatsApp = document.createElement('a');
 
             linkWhatsApp.href = url;
@@ -1234,19 +1585,71 @@
 
             fecharCheckout();
 
+            document.body.classList.add('pedido-concluido');
             document.getElementById('pedidoEnviado').style.display = 'block';
 
-            document.getElementById('pedidoEnviado').scrollIntoView({
+            window.scrollTo({
+                top: 0,
                 behavior: 'smooth'
             });
         }
 
-        /* FECHAR COM ESC */
+        /* COMEÇAR UM NOVO PEDIDO */
+
+        function fazerNovoPedido() {
+            fecharCarrinho();
+            fecharCheckout();
+            fecharAjuda();
+
+            carrinho = [];
+            pagamentoSelecionado = '';
+            pixConfirmado = false;
+            chavePixCopiada = false;
+
+            document.getElementById('nome').value = '';
+            document.getElementById('whatsapp').value = '';
+            document.getElementById('mesa').value = '';
+
+            document.querySelectorAll('input[name="pagamento"]').forEach(radio => {
+                radio.checked = false;
+            });
+
+            document.querySelectorAll('.opcao-pagamento').forEach(opcao => {
+                opcao.classList.remove('selecionado');
+            });
+
+            ['infoPix', 'infoCartao', 'infoDinheiro'].forEach(id => {
+                document.getElementById(id).style.display = 'none';
+            });
+
+            document.getElementById('btnWhatsApp').style.display = 'none';
+
+            const botaoPix = document.getElementById('btnPix');
+            botaoPix.style.display = 'none';
+            botaoPix.classList.remove('confirmado');
+            botaoPix.textContent = 'Fiz Pix';
+
+            document.getElementById('mensagemCopiaPix').textContent =
+                '👆 Toque no número para copiar a chave Pix';
+
+            atualizarCarrinho();
+
+            document.getElementById('pedidoEnviado').style.display = 'none';
+            document.body.classList.remove('pedido-concluido');
+
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        /* FECHAR JANELAS COM ESC */
 
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') {
                 fecharCarrinho();
                 fecharCheckout();
+                fecharAjuda();
             }
         });
 
