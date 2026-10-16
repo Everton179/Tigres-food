@@ -74,10 +74,9 @@
             gap: 10px;
         }
 
-        /* BOTÃO DE AJUDA EM DESTAQUE */
         .btn-ajuda-topo {
-            background: rgb(254, 254, 254);
-            color: #111010;
+            background: #fff;
+            color: #111;
             border: 2px solid #fff;
             padding: 12px 16px;
             border-radius: 11px;
@@ -101,8 +100,8 @@
 
         .btn-carrinho-topo:hover {
             border: 3px solid #111;
-            color: #f1f1f1;
-            background: rgb(14, 14, 14);
+            color: #fff;
+            background: #0e0e0e;
         }
 
         /* JANELA DE AJUDA */
@@ -160,10 +159,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .btn-fechar-ajuda:hover {
-            background: rgb(231, 4, 4);
         }
 
         .ajuda-etapa {
@@ -247,7 +242,7 @@
             padding: 35px 25px;
             border-radius: 18px;
             background: linear-gradient(135deg, #341ff0, #140f08);
-            color: rgb(239, 239, 239);
+            color: #efefef;
             text-align: center;
             font-size: 20px;
             margin-bottom: 10px;
@@ -563,21 +558,21 @@
         }
 
         .info-pagamento strong {
-            color: rgb(8, 8, 214);
+            color: #0808d6;
         }
 
-        /* CHAVE PIX CLICÁVEL */
+        /* CHAVE PIX */
         .pix-chave {
             border: 2px solid #00a650;
             margin: 10px 0;
             padding: 14px 10px;
-            background: #ffffff;
+            background: #fff;
             border-radius: 8px;
             word-break: break-word;
             font-weight: bold;
             text-align: center;
             font-size: 20px;
-            color: #111111;
+            color: #111;
             cursor: pointer;
             transition: .2s;
             user-select: all;
@@ -596,25 +591,11 @@
 
         .mensagem-copia-pix {
             text-align: center;
-            font-size: 18px;
+            font-size: 16px;
             color: #00883f;
             margin-top: 5px;
             margin-bottom: 8px;
             font-weight: bold;
-        }
-
-        .btn-pix {
-            display: none;
-            border: 2px solid black;
-            background: green;
-            color: #fff;
-            padding: 11px 15px;
-            border-radius: 8px;
-            margin-top: 8px;
-        }
-
-        .btn-pix.confirmado {
-            background: #16803d;
         }
 
         .whatsapp {
@@ -643,20 +624,12 @@
             border: 2px solid black;
             flex: 1;
             padding: 13px;
-            background: rgb(226, 10, 10);
+            background: #e20a0a;
             color: #111;
             border-radius: 9px;
         }
 
-        .btn-confirmar {
-            flex: 2;
-            padding: 13px;
-            background: var(--azul-escuro);
-            color: #fff;
-            border-radius: 9px;
-        }
-
-        /* MENSAGEM DO PEDIDO */
+        /* TELA DE ORIENTAÇÃO APÓS ABRIR WHATSAPP */
         .pedido-enviado {
             display: none;
             margin-top: 25px;
@@ -670,31 +643,21 @@
 
         .pedido-enviado h2 {
             color: var(--azul-escuro);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
-        .pedido-enviado .tempo {
-            margin-top: 15px;
-            background: #e8f6ff;
-            padding: 15px;
-            border-radius: 10px;
-            border: 2px solid var(--azul);
-        }
-
-        .pedido-enviado .cozinha {
-            margin-top: 15px;
-            font-weight: bold;
+        .pedido-enviado p {
             line-height: 1.5;
+            margin-top: 12px;
         }
 
         .aviso {
             font-size: 13px;
             color: #555;
             margin-top: 10px;
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
-        /* BOTÃO FAZER OUTRO PEDIDO */
         .btn-outro-pedido {
             background: var(--azul);
             color: #fff;
@@ -708,7 +671,7 @@
             background: var(--azul-escuro);
         }
 
-        /* TELA DE AGRADECIMENTO */
+        /* TELA APÓS ABRIR O WHATSAPP */
         body.pedido-concluido header,
         body.pedido-concluido .hero,
         body.pedido-concluido #produtos,
@@ -829,7 +792,8 @@
                 onclick="abrirAjuda()"
                 aria-label="Abrir ajuda para fazer o pedido"
             >
-                <span style="color: #1fd10b; font-size: 15px; font-weight: bold;">?</span> Ajuda
+                 Ajuda <span style="color: #1fd10b; font-size: 15px; font-weight: bold;">?</span>
+                
             </button>
 
             <button class="btn-carrinho-topo" onclick="abrirCarrinho()">
@@ -838,7 +802,7 @@
         </div>
     </header>
 
-    <!-- JANELA DE AJUDA -->
+    <!-- AJUDA SIMPLIFICADA -->
     <div
         class="modal-ajuda"
         id="modalAjuda"
@@ -866,57 +830,43 @@
                 <div class="ajuda-numero">1</div>
                 <div class="ajuda-texto">
                     <strong>Escolha seus pastéis</strong>
-                    <p>Clique em “Adicionar ao pedido” nos sabores desejados.</p>
+                    <p>Adicione os sabores ao carrinho e confira as quantidades e o valor total.</p>
                 </div>
             </div>
 
             <div class="ajuda-etapa">
                 <div class="ajuda-numero">2</div>
                 <div class="ajuda-texto">
-                    <strong>Confira seu pedido</strong>
-                    <p>Abra o carrinho, confira os itens, as quantidades e o valor total. Depois, clique em “Continuar”.</p>
+                    <strong>Preencha seus dados e pague</strong>
+                    <p>Informe seu nome e WhatsApp com DDD.</p>
+                    <p style="margin-top: 7px;">
+                        <strong>Pix:</strong> copie a chave e faça o pagamento pelo banco.
+                        O financeiro verificará o recebimento.
+                    </p>
+                    <p style="margin-top: 7px;">
+                        <strong>Cartão ou dinheiro:</strong> pague no balcão antes de enviar o pedido.
+                    </p>
                 </div>
             </div>
 
             <div class="ajuda-etapa">
                 <div class="ajuda-numero">3</div>
                 <div class="ajuda-texto">
-                    <strong>Preencha seus dados</strong>
-                    <p>Informe seu nome completo, WhatsApp com DDD (11 números) e número da mesa.</p>
-                </div>
-            </div>
-
-            <div class="ajuda-etapa">
-                <div class="ajuda-numero">4</div>
-                <div class="ajuda-texto">
-                    <strong>Escolha como pagar</strong>
-                    <p><strong>Pix:</strong> copie a chave, faça o pagamento no aplicativo do banco e clique em “Fiz Pix”.</p>
-                    <p style="margin-top: 7px;"><strong>Cartão ou dinheiro:</strong> realize o pagamento no balcão antes de enviar o pedido.</p>
-                </div>
-            </div>
-
-            <div class="ajuda-etapa">
-                <div class="ajuda-numero">5</div>
-                <div class="ajuda-texto">
-                    <strong>Envie seu pedido</strong>
-                    <p>Clique em “Enviar pedido pelo WhatsApp”, confira a mensagem e envie para nossa equipe. Aguarde a confirmação.</p>
+                    <strong>Confirme e envie pelo WhatsApp</strong>
+                    <p>Confira o resumo, confirme para abrir o WhatsApp e toque em <strong>Enviar</strong>. Só depois de enviar a mensagem sua equipe poderá receber o pedido.</p>
                 </div>
             </div>
 
             <div class="ajuda-dica">
-                💡 <strong>Dica:</strong> antes de enviar, confira os sabores, as quantidades e o valor total do pedido.
+                💡 <strong>Importante:</strong> se voltar ao site, confira se a mensagem realmente foi enviada antes de fazer outro pedido.
             </div>
 
             <div class="ajuda-atendente">
                 <strong>🙋 Precisa de ajuda?</strong>
-                <p>Se precisar de um atendente, dirija-se ao <strong>balcão de pagamento</strong>. Nossa equipe estará pronta para ajudar!</p>
+                <p>Dirija-se ao balcão de pagamento. Nossa equipe estará pronta para ajudar!</p>
             </div>
 
-            <button
-                type="button"
-                class="btn-entendi"
-                onclick="fecharAjuda()"
-            >
+            <button type="button" class="btn-entendi" onclick="fecharAjuda()">
                 Entendi, vamos pedir!
             </button>
         </div>
@@ -930,16 +880,18 @@
 
         <section class="produtos" id="produtos"></section>
 
+        <!-- TELA DE ORIENTAÇÃO APÓS ABRIR WHATSAPP -->
         <section class="pedido-enviado" id="pedidoEnviado">
-            <h2>🐯 Obrigado por pedir no Tigres Food! 💙</h2>
+            <h2>🐯 Falta só mais um passo! 💙</h2>
 
-            <div class="cozinha">
-                Agora é só aguardar seu pedido!
-            </div>
-
-            <p style="margin-top: 15px;">
-                😋 Quer pedir mais pastéis?
+            <p>
+                <strong>O WhatsApp foi aberto com os dados do seu pedido.</strong>
             </p>
+
+            <p>
+                <strong>Confira novamente se a mensagem foi enviada para que nossa equipe receba o pedido.</strong>
+            </p>
+            <p>😋 Quer pedir mais pastéis?</p>
 
             <button
                 type="button"
@@ -948,19 +900,20 @@
             >
                 🛒 Fazer outro pedido
             </button>
+
+            <p class="aviso">
+                A abertura do WhatsApp não confirma o recebimento do pedido.
+                O financeiro ainda precisa verificar o pagamento quando aplicável.
+            </p>
         </section>
     </main>
 
     <div class="overlay" id="overlay" onclick="fecharCarrinho()"></div>
 
-    <aside class="painel-carrinho" id="painelCarrinho"
-           aria-label="Carrinho de compras">
-
+    <aside class="painel-carrinho" id="painelCarrinho" aria-label="Carrinho de compras">
         <div class="painel-topo">
             <h2>🛒 Seu carrinho</h2>
-
-            <button class="fechar" onclick="fecharCarrinho()"
-                    aria-label="Fechar carrinho">✕</button>
+            <button class="fechar" onclick="fecharCarrinho()" aria-label="Fechar carrinho">✕</button>
         </div>
 
         <div id="listaCarrinhoPainel">
@@ -976,25 +929,23 @@
         </button>
     </aside>
 
-    <div class="modal" id="checkoutModal" role="dialog"
-         aria-modal="true" aria-labelledby="tituloCheckout">
-
+    <!-- CHECKOUT -->
+    <div class="modal" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="tituloCheckout">
         <div class="modal-content">
             <h2 id="tituloCheckout">📋 Finalizar pedido</h2>
 
             <div class="campo">
-                <label for="nome">Nome completo</label>
-
+                <label for="nome">Identificação</label>
                 <input
                     type="text"
                     id="nome"
-                    placeholder="Digite seu nome completo"
+                    placeholder="Nome completo "
                     required
-                    minlength="15"
+                    minlength="10"
                     maxlength="50"
-                    pattern="[A-Za-zÀ-ÿ\s]+"
-                    title="Digite seu nome completo usando apenas letras e espaços, com no mínimo 15 e no máximo 50 caracteres."
-                    oninput="this.value = this.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '').slice(0, 50)"
+                    pattern="[A-Za-zÀ-ÖØ-öø-ÿ\s]+"
+                    title="Digite sua identificação com no mínimo 10 letras e no máximo 50 caracteres."
+                    oninput="this.value = this.value.replace(/[^a-zA-ZÀ-ÖØ-öø-ÿ\s]/g, '').slice(0, 50)"
                 >
             </div>
 
@@ -1003,29 +954,12 @@
                 <input
                     type="tel"
                     id="whatsapp"
-                    placeholder="Ex: 11987161366"
+                    placeholder="DDD e o número do celular"
                     inputmode="numeric"
                     maxlength="11"
                     pattern="[0-9]{11}"
                     title="Digite o WhatsApp com DDD, contendo exatamente 11 números."
                     oninput="this.value = this.value.replace(/\D/g, '').slice(0, 11)"
-                    required
-                >
-                <p class="aviso">Digite o DDD e o número do celular, totalizando 11 dígitos.</p>
-            </div>
-
-            <div class="campo">
-                <label for="mesa">Número da mesa</label>
-
-                <input
-                    type="text"
-                    id="mesa"
-                    placeholder="Digite de 1 a 6"
-                    inputmode="numeric"
-                    maxlength="1"
-                    pattern="[1-6]"
-                    title="Digite um número de mesa entre 1 e 6."
-                    oninput="this.value = this.value.replace(/[^1-6]/g, '').slice(0, 1)"
                     required
                 >
             </div>
@@ -1034,35 +968,32 @@
                 <h3>💳 Forma de pagamento</h3>
 
                 <div class="opcoes-pagamento">
-                    <label class="opcao-pagamento"
-                           onclick="selecionarPagamento('Pix', this)">
+                    <label class="opcao-pagamento" onclick="selecionarPagamento('Pix', this)">
                         <input type="radio" name="pagamento" value="Pix">
                         Pix
                     </label>
 
-                    <label class="opcao-pagamento"
-                           onclick="selecionarPagamento('Cartão de crédito', this)">
-                        <input type="radio" name="pagamento"
-                               value="Cartão de crédito">
+                    <label class="opcao-pagamento" onclick="selecionarPagamento('Cartão de crédito', this)">
+                        <input type="radio" name="pagamento" value="Cartão de crédito">
                         Cartão
                     </label>
 
-                    <label class="opcao-pagamento"
-                           onclick="selecionarPagamento('Dinheiro', this)">
+                    <label class="opcao-pagamento" onclick="selecionarPagamento('Dinheiro', this)">
                         <input type="radio" name="pagamento" value="Dinheiro">
                         Dinheiro
                     </label>
                 </div>
 
+                <!-- PIX -->
                 <div class="info-pagamento" id="infoPix">
                     <strong>💠 Pagamento via Pix</strong>
 
-                    <p>
-                        Copie a chave Pix, faça o pagamento no aplicativo
-                        do seu banco e depois clique em “Fiz Pix”.
+                    <p style="margin-top: 7px;">
+                        1. Copie a chave abaixo.<br>
+                        2. Faça o pagamento pelo aplicativo do banco.<br>
+                        3. Volte para esta página e continue pelo WhatsApp.
                     </p>
 
-            
                     <div
                         class="pix-chave"
                         id="pixChave"
@@ -1075,7 +1006,7 @@
                     ></div>
 
                     <p class="mensagem-copia-pix" id="mensagemCopiaPix" aria-live="polite">
-                        👆 Toque no número para copiar a chave Pix
+                        👆 Toque para copiar a chave.
                     </p>
 
                     <p style="margin-top: 12px;">
@@ -1087,47 +1018,34 @@
                     </p>
 
                     <p class="aviso">
-                        Copie a chave e use no aplicativo do seu banco.
-                        Antes de confirmar, confira se o nome do favorecido está correto.
-                    </p>
-
-                    <button type="button" class="btn-pix" id="btnPix"
-                            onclick="confirmarPix()">
-                        Fiz Pix
-                    </button>
-
-                    <p class="aviso">
-                        Ao clicar em “Fiz Pix”, você declara que realizou o pagamento.
-                        A equipe ainda precisa verificar o recebimento.
+                        Confira o titular e os dados antes de pagar.
+                        O financeiro verificará se o pagamento foi recebido.
                     </p>
                 </div>
 
+                <!-- CARTÃO -->
                 <div class="info-pagamento" id="infoCartao">
                     <strong>Pagamento com cartão</strong>
-
-                    <p>
-                        Antes de enviar seu pedido pelo WhatsApp,
-                        faça o pagamento com cartão no balcão.
+                    <p style="margin-top: 7px;">
+                        Faça o pagamento no balcão antes de enviar o pedido pelo WhatsApp.
                     </p>
                 </div>
 
+                <!-- DINHEIRO -->
                 <div class="info-pagamento" id="infoDinheiro">
                     <strong>Pagamento em dinheiro</strong>
-                    <p>
-                        Antes de enviar seu pedido pelo WhatsApp,
-                        faça o pagamento no balcão.
+                    <p style="margin-top: 7px;">
+                        Faça o pagamento no balcão antes de enviar o pedido pelo WhatsApp.
                     </p>
                 </div>
             </div>
 
-            <button type="button" class="whatsapp" id="btnWhatsApp"
-                    onclick="finalizarPedido()">
-                📲 Concluir pedido pelo WhatsApp
+            <button type="button" class="whatsapp" id="btnWhatsApp" onclick="finalizarPedido()">
+                📲 Conferir e continuar pelo WhatsApp
             </button>
 
             <div class="botoes-modal">
-                <button type="button" class="btn-cancelar"
-                        onclick="fecharCheckout()">
+                <button type="button" class="btn-cancelar" onclick="fecharCheckout()">
                     Cancelar
                 </button>
             </div>
@@ -1147,7 +1065,8 @@
         function abrirAjuda() {
             document.getElementById('modalAjuda').classList.add('aberto');
             document.body.style.overflow = 'hidden';
-            document.getElementById('modalAjuda').querySelector('.btn-fechar-ajuda').focus();
+            document.getElementById('modalAjuda')
+                .querySelector('.btn-fechar-ajuda').focus();
         }
 
         function fecharAjuda() {
@@ -1168,16 +1087,14 @@
         /* COPIAR CHAVE PIX */
 
         async function copiarChavePix() {
-            const chave = PIX_CHAVE;
             const mensagem = document.getElementById('mensagemCopiaPix');
-            const botaoPix = document.getElementById('btnPix');
 
             try {
                 if (navigator.clipboard && window.isSecureContext) {
-                    await navigator.clipboard.writeText(chave);
+                    await navigator.clipboard.writeText(PIX_CHAVE);
                 } else {
                     const campoTemporario = document.createElement('textarea');
-                    campoTemporario.value = chave;
+                    campoTemporario.value = PIX_CHAVE;
                     campoTemporario.setAttribute('readonly', '');
                     campoTemporario.style.position = 'fixed';
                     campoTemporario.style.opacity = '0';
@@ -1196,17 +1113,17 @@
                 chavePixCopiada = true;
 
                 mensagem.textContent =
-                    '✅ Pix copiado! Retorne aqui após o pagamento.';
+                    '✅ Chave copiada! Faça o Pix e depois continue pelo WhatsApp.';
 
-                botaoPix.style.display = 'inline-block';
+                /* Após copiar a chave, libera o botão do WhatsApp.
+                   O financeiro continuará responsável por verificar o pagamento. */
+                document.getElementById('btnWhatsApp').style.display = 'block';
 
             } catch (erro) {
                 chavePixCopiada = false;
-                botaoPix.style.display = 'none';
 
                 mensagem.textContent =
-                    'Não foi possível copiar automaticamente. ' +
-                    'Tente novamente ou selecione o número para copiá-lo.';
+                    'Não foi possível copiar automaticamente. Tente novamente ou selecione o número para copiá-lo.';
             }
         }
 
@@ -1249,7 +1166,6 @@
 
         let carrinho = [];
         let pagamentoSelecionado = '';
-        let pixConfirmado = false;
 
         /* PREÇOS */
 
@@ -1277,8 +1193,7 @@
 
                         <div class="preco">${formatarMoeda(p.preco)}</div>
 
-                        <button class="btn-adicionar"
-                                onclick="adicionarProduto(${p.id})">
+                        <button class="btn-adicionar" onclick="adicionarProduto(${p.id})">
                             Adicionar ao pedido
                         </button>
                     </article>
@@ -1328,17 +1243,13 @@
 
         function calcularTotal() {
             return carrinho.reduce(
-                (soma, item) =>
-                    soma + produtos[item.id].preco * item.quantidade,
+                (soma, item) => soma + produtos[item.id].preco * item.quantidade,
                 0
             );
         }
 
         function calcularQuantidadeItens() {
-            return carrinho.reduce(
-                (soma, item) => soma + item.quantidade,
-                0
-            );
+            return carrinho.reduce((soma, item) => soma + item.quantidade, 0);
         }
 
         function htmlCarrinho() {
@@ -1377,8 +1288,7 @@
         }
 
         function atualizarCarrinho() {
-            document.getElementById('listaCarrinhoPainel').innerHTML =
-                htmlCarrinho();
+            document.getElementById('listaCarrinhoPainel').innerHTML = htmlCarrinho();
 
             document.getElementById('totalPainel').textContent =
                 formatarMoeda(calcularTotal());
@@ -1419,7 +1329,6 @@
 
         function selecionarPagamento(pagamento, elemento) {
             pagamentoSelecionado = pagamento;
-            pixConfirmado = false;
             chavePixCopiada = false;
 
             document.querySelectorAll('.opcao-pagamento').forEach(el => {
@@ -1435,13 +1344,8 @@
 
             document.getElementById('btnWhatsApp').style.display = 'none';
 
-            const botaoPix = document.getElementById('btnPix');
-            botaoPix.style.display = 'none';
-            botaoPix.classList.remove('confirmado');
-            botaoPix.textContent = 'Fiz Pix';
-
             document.getElementById('mensagemCopiaPix').textContent =
-                '👆 Toque no número para copiar a chave Pix';
+                '👆 Toque para copiar a chave.';
 
             if (pagamento === 'Pix') {
                 document.getElementById('infoPix').style.display = 'block';
@@ -1454,45 +1358,31 @@
             }
         }
 
-        function confirmarPix() {
-            if (!chavePixCopiada) {
-                alert('Primeiro copie a chave Pix.');
-                return;
-            }
-
-            pixConfirmado = true;
-
-            document.getElementById('btnPix').classList.add('confirmado');
-            document.getElementById('btnPix').textContent =
-                '✓ Pix marcado como realizado';
-
-            document.getElementById('btnWhatsApp').style.display = 'block';
-        }
-
         /* VALIDAR FORMULÁRIO */
 
         function validarFormulario() {
             const campoNome = document.getElementById('nome');
             const campoWhatsApp = document.getElementById('whatsapp');
-            const campoMesa = document.getElementById('mesa');
 
             const nome = campoNome.value.trim();
             const whatsapp = campoWhatsApp.value.replace(/\D/g, '');
-            const mesa = campoMesa.value.trim();
+
+            // Validação original do nome preservada.
+            const quantidadeLetras = nome.replace(/\s/g, '').length;
 
             if (!carrinho.length) {
                 alert('Adicione pelo menos um produto ao pedido.');
                 return false;
             }
 
-            if (nome.length < 15 || nome.length > 50) {
-                alert('Digite seu nome completo, com no mínimo 15 e no máximo 50 caracteres.');
+            if (quantidadeLetras < 10 || nome.length > 50) {
+                alert('Digite sua identificação com no mínimo 10 letras e no máximo 50 caracteres.');
                 campoNome.focus();
                 return false;
             }
 
             if (!/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/.test(nome)) {
-                alert('O nome deve conter apenas letras e espaços, sem números ou símbolos.');
+                alert('A identificação deve conter apenas letras e espaços, sem números ou símbolos.');
                 campoNome.focus();
                 return false;
             }
@@ -1500,21 +1390,6 @@
             if (whatsapp.length !== 11) {
                 alert('Digite seu WhatsApp com DDD, contendo exatamente 11 números.');
                 campoWhatsApp.focus();
-                return false;
-            }
-
-            if (!mesa) {
-                alert('Digite o número da mesa.');
-                campoMesa.focus();
-                return false;
-            }
-
-            const numeroMesa = Number(mesa);
-
-            if (!Number.isInteger(numeroMesa) ||
-                numeroMesa < 1 || numeroMesa > 6) {
-                alert('Informe uma mesa válida, de 1 a 6.');
-                campoMesa.focus();
                 return false;
             }
 
@@ -1528,22 +1403,16 @@
                 return false;
             }
 
-            if (pagamentoSelecionado === 'Pix' && !pixConfirmado) {
-                alert('Realize o Pix e clique em “Fiz Pix” antes de finalizar.');
-                return false;
-            }
-
             return true;
         }
 
-        /* ENVIAR PEDIDO PELO WHATSAPP */
+        /* RESUMO E ENVIO PELO WHATSAPP */
 
         function finalizarPedido() {
             if (!validarFormulario()) return;
 
             const nome = document.getElementById('nome').value.trim();
             const whatsapp = document.getElementById('whatsapp').value.replace(/\D/g, '');
-            const mesa = document.getElementById('mesa').value.trim();
 
             let mensagem =
                 'Olá! Gostaria de fazer um pedido no Tigres Food:\n\n';
@@ -1558,13 +1427,40 @@
 
             mensagem +=
                 `\nTotal: ${formatarMoeda(calcularTotal())}` +
-                `\n\nNome: ${nome}` +
+                `\n\nIdentificação: ${nome}` +
                 `\nWhatsApp: ${whatsapp}` +
-                `\nMesa: ${mesa}` +
                 `\nPagamento: ${pagamentoSelecionado.includes('Cartão') ? 'Cartão' : pagamentoSelecionado}`;
 
             if (pagamentoSelecionado === 'Pix') {
-                mensagem += '\n\nO comprovante precisa ser conferido.';
+                mensagem +=
+                    '\n\nPagamento via Pix informado pelo cliente. ' +
+                    'Favor verificar o recebimento antes de confirmar o pedido.';
+            } else {
+                mensagem +=
+                    '\n\nPagamento no balcão informado pelo cliente.';
+            }
+
+            /* Confirmação antes de sair do site */
+            let resumo =
+                'CONFIRA SEU PEDIDO\n\n';
+
+            carrinho.forEach(item => {
+                const produto = produtos[item.id];
+
+                resumo +=
+                    `${item.quantidade}x ${produto.nome} — ` +
+                    `${formatarMoeda(produto.preco * item.quantidade)}\n`;
+            });
+
+            resumo +=
+                `\nTOTAL: ${formatarMoeda(calcularTotal())}` +
+                `\nPagamento: ${pagamentoSelecionado.includes('Cartão') ? 'Cartão' : pagamentoSelecionado}` +
+                '\n\nAo continuar, o WhatsApp será aberto com a mensagem pronta.' +
+                '\nVocê ainda precisará tocar em ENVIAR no WhatsApp.' +
+                '\n\nDeseja conferir e continuar?';
+
+            if (!confirm(resumo)) {
+                return;
             }
 
             const url =
@@ -1573,8 +1469,8 @@
                 '?text=' +
                 encodeURIComponent(mensagem);
 
+            /* Abre o WhatsApp em outra aba */
             const linkWhatsApp = document.createElement('a');
-
             linkWhatsApp.href = url;
             linkWhatsApp.target = '_blank';
             linkWhatsApp.rel = 'noopener noreferrer';
@@ -1585,6 +1481,8 @@
 
             fecharCheckout();
 
+            /* Não afirma que o pedido foi recebido.
+               Orienta o cliente a conferir o envio no WhatsApp. */
             document.body.classList.add('pedido-concluido');
             document.getElementById('pedidoEnviado').style.display = 'block';
 
@@ -1597,18 +1495,28 @@
         /* COMEÇAR UM NOVO PEDIDO */
 
         function fazerNovoPedido() {
+            const desejaNovo = confirm(
+                'Antes de começar outro pedido:\n\n' +
+                'Você já voltou ao WhatsApp e tocou em ENVIAR na mensagem anterior?\n\n' +
+                'Se ainda não enviou, volte ao WhatsApp e envie primeiro. ' +
+                'Fazer outro pedido agora pode causar duplicidade ou fazer você perder os dados deste pedido.\n\n' +
+                'Deseja limpar este pedido e começar outro?'
+            );
+
+            if (!desejaNovo) {
+                return;
+            }
+
             fecharCarrinho();
             fecharCheckout();
             fecharAjuda();
 
             carrinho = [];
             pagamentoSelecionado = '';
-            pixConfirmado = false;
             chavePixCopiada = false;
 
             document.getElementById('nome').value = '';
             document.getElementById('whatsapp').value = '';
-            document.getElementById('mesa').value = '';
 
             document.querySelectorAll('input[name="pagamento"]').forEach(radio => {
                 radio.checked = false;
@@ -1624,13 +1532,8 @@
 
             document.getElementById('btnWhatsApp').style.display = 'none';
 
-            const botaoPix = document.getElementById('btnPix');
-            botaoPix.style.display = 'none';
-            botaoPix.classList.remove('confirmado');
-            botaoPix.textContent = 'Fiz Pix';
-
             document.getElementById('mensagemCopiaPix').textContent =
-                '👆 Toque no número para copiar a chave Pix';
+                '👆 Toque para copiar a chave.';
 
             atualizarCarrinho();
 
