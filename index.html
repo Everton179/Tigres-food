@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tigres Food 🐯</title>
 
+    <!-- Firebase: necessário para consultar o estoque -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
     <style>
         :root {
             --azul: #1688c9;
@@ -39,6 +43,11 @@
             cursor: pointer;
             font-weight: 700;
             transition: .2s;
+        }
+
+        button:disabled {
+            cursor: not-allowed;
+            opacity: .55;
         }
 
         button:focus-visible,
@@ -311,6 +320,22 @@
             margin: 12px 0;
         }
 
+        /* Disponibilidade do estoque */
+        .estoque-produto {
+            font-size: 13px;
+            font-weight: bold;
+            margin: 8px 0 12px;
+            color: #16803c;
+        }
+
+        .estoque-produto.esgotado {
+            color: var(--vermelho);
+        }
+
+        .estoque-produto.consultando {
+            color: #666;
+        }
+
         .btn-adicionar {
             background: var(--azul);
             color: #fff;
@@ -322,6 +347,11 @@
 
         .btn-adicionar:hover {
             background: black;
+        }
+
+        .btn-adicionar:disabled {
+            background: #999;
+            color: #fff;
         }
 
         /* CARRINHO */
@@ -793,7 +823,6 @@
                 aria-label="Abrir ajuda para fazer o pedido"
             >
                  Ajuda <span style="color: #1fd10b; font-size: 15px; font-weight: bold;">?</span>
-                
             </button>
 
             <button class="btn-carrinho-topo" onclick="abrirCarrinho()">
@@ -1053,12 +1082,49 @@
     </div>
 
     <script>
-        /* CONFIGURAÇÕES */
+        /* CONFIGURAÇÕES ORIGINAIS */
 
         const WHATSAPP_FINANCEIRO = '5571996538925';
         const PIX_CHAVE = '11987160280';
 
         document.getElementById('pixChave').textContent = PIX_CHAVE;
+
+        /* FIREBASE: CONFIGURAÇÃO DO PROJETO */
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCS5gKfwC5LA6HYtwZEs9lm6Qu54QVC0Qw",
+            authDomain: "tigres-food.firebaseapp.com",
+            projectId: "tigres-food",
+            storageBucket: "tigres-food.firebasestorage.app",
+            messagingSenderId: "374947589802",
+            appId: "1:374947589802:web:db70442bc08353a45b2ad3",
+            measurementId: "G-N4NZ03TM9R"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        /*
+          MAPA DO ESTOQUE:
+          Produto 1 -> estoque/frango_catupiry
+          Produto 2 -> estoque/carne_queijo
+          Produto 3 -> estoque/pizza
+          Produto 4 -> estoque/nutella
+
+          Este site consulta e acompanha o estoque.
+          Não desconta as unidades: o financeiro continua responsável
+          pelo desconto quando confirma o pagamento e libera o pedido.
+        */
+
+        let estoqueAtual = {
+            1: null,
+            2: null,
+            3: null,
+            4: null
+        };
+
+        let estoqueCarregado = false;
+        let estoqueErro = false;
 
         /* JANELA DE AJUDA */
 
@@ -1115,8 +1181,6 @@
                 mensagem.textContent =
                     '✅ Chave copiada! Faça o Pix e depois continue pelo WhatsApp.';
 
-                /* Após copiar a chave, libera o botão do WhatsApp.
-                   O financeiro continuará responsável por verificar o pagamento. */
                 document.getElementById('btnWhatsApp').style.display = 'block';
 
             } catch (erro) {
@@ -1136,7 +1200,8 @@
                 descricao: 'Frango desfiado com catupiry cremoso.',
                 preco: 13,
                 emoji: '🍗',
-                imagem: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOY4vQn8AAM9iUwv4Y0pxwTRC-FO8nTorFCvkoBdKznjKKnzF97EurxI1Y&s=10'
+                imagem: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOY4vQn8AAM9iUwv4Y0pxwTRC-FO8nTorFCvkoBdKznjKKnzF97EurxI1Y&s=10',
+                documentoEstoque: 'frango_catupiry'
             },
             2: {
                 id: 2,
@@ -1144,7 +1209,8 @@
                 descricao: 'Carne temperada com queijo derretido.',
                 preco: 13,
                 emoji: '🥩',
-                imagem: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMgS5f1EGPTZEB7yih5-9yZtMybSjIdnzWeJj4DKNCXA&s=10'
+                imagem: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMgS5f1EGPTZEB7yih5-9yZtMybSjIdnzWeJj4DKNCXA&s=10',
+                documentoEstoque: 'carne_queijo'
             },
             3: {
                 id: 3,
@@ -1152,7 +1218,8 @@
                 descricao: 'Queijo, tomate e orégano.',
                 preco: 13,
                 emoji: '🍕',
-                imagem: 'https://receitasdelicias.com/wp-content/uploads/2022/02/pastel-de-Pizza.jpg'
+                imagem: 'https://receitasdelicias.com/wp-content/uploads/2022/02/pastel-de-Pizza.jpg',
+                documentoEstoque: 'pizza'
             },
             4: {
                 id: 4,
@@ -1160,7 +1227,8 @@
                 descricao: 'Pastel recheado com Nutella.',
                 preco: 13,
                 emoji: '🍫',
-                imagem: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRx1oWfU4MsRAiNNfxFc8hF8cLj-SRUHy-3Sn8VRG-9nr_mxXbS5JGzwF0&s=10'
+                imagem: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRx1oWfU4MsRAiNNfxFc8hF8cLj-SRUHy-3Sn8VRG-9nr_mxXbS5JGzwF0&s=10',
+                documentoEstoque: 'nutella'
             }
         };
 
@@ -1176,34 +1244,218 @@
             });
         }
 
-        /* MOSTRAR PRODUTOS */
+        /* ESTOQUE: CONSULTAR FIRESTORE EM TEMPO REAL */
+
+        function iniciarMonitoramentoEstoque() {
+            db.collection('estoque').onSnapshot(
+                function(snapshot) {
+                    estoqueErro = false;
+                    estoqueCarregado = true;
+
+                    /*
+                      Começa cada atualização considerando os documentos
+                      ausentes como indisponíveis.
+                    */
+                    Object.keys(produtos).forEach(function(id) {
+                        estoqueAtual[id] = null;
+                    });
+
+                    snapshot.forEach(function(documento) {
+                        const produtoEncontrado = Object.values(produtos).find(
+                            p => p.documentoEstoque === documento.id
+                        );
+
+                        if (!produtoEncontrado) return;
+
+                        const dados = documento.data();
+                        const quantidade = dados.quantidade;
+
+                        if (Number.isInteger(quantidade) && quantidade >= 0) {
+                            estoqueAtual[produtoEncontrado.id] = quantidade;
+                        } else {
+                            estoqueAtual[produtoEncontrado.id] = null;
+                        }
+                    });
+
+                    /*
+                      Se o estoque diminuir enquanto o cliente está
+                      com o site aberto, ajusta o carrinho para não
+                      ultrapassar a quantidade disponível.
+                    */
+                    ajustarCarrinhoAoEstoque();
+
+                    renderizarProdutos();
+                    atualizarCarrinho();
+                    atualizarEstadoCheckout();
+                },
+                function(erro) {
+                    console.error('Erro ao consultar estoque no Firebase:', erro);
+
+                    estoqueErro = true;
+                    estoqueCarregado = false;
+
+                    renderizarProdutos();
+                    atualizarCarrinho();
+                    atualizarEstadoCheckout();
+                }
+            );
+        }
+
+        function obterEstoque(id) {
+            if (!estoqueCarregado || estoqueErro) {
+                return null;
+            }
+
+            return estoqueAtual[id];
+        }
+
+        function ajustarCarrinhoAoEstoque() {
+            if (!estoqueCarregado || estoqueErro) return;
+
+            carrinho.forEach(function(item) {
+                const estoque = estoqueAtual[item.id];
+
+                if (
+                    !Number.isInteger(estoque) ||
+                    estoque <= 0
+                ) {
+                    item.quantidade = 0;
+                } else if (item.quantidade > estoque) {
+                    item.quantidade = estoque;
+                }
+            });
+
+            carrinho = carrinho.filter(item => item.quantidade > 0);
+        }
+
+        function validarEstoqueCarrinho() {
+            if (!estoqueCarregado || estoqueErro || !carrinho.length) {
+                return false;
+            }
+
+            return carrinho.every(function(item) {
+                const estoque = estoqueAtual[item.id];
+
+                return (
+                    Number.isInteger(estoque) &&
+                    estoque >= 0 &&
+                    item.quantidade > 0 &&
+                    item.quantidade <= estoque
+                );
+            });
+        }
+
+        function atualizarEstadoCheckout() {
+            const botao = document.getElementById('btnWhatsApp');
+
+            if (!botao) return;
+
+            /*
+              Se o estoque não estiver disponível, não deixa continuar
+              com um pedido que não pode ser validado.
+            */
+            if (!estoqueCarregado || estoqueErro) {
+                botao.disabled = true;
+                botao.title = 'Aguardando confirmação do estoque.';
+            } else {
+                botao.disabled = false;
+                botao.title = '';
+            }
+        }
+
+        /* MOSTRAR PRODUTOS COM ESTOQUE */
 
         function renderizarProdutos() {
             document.getElementById('produtos').innerHTML =
-                Object.values(produtos).map(p => `
-                    <article class="produto">
-                        <img
-                            src="${p.imagem}"
-                            alt="${p.nome}"
-                            onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div style=&quot;font-size:55px;margin:15px 0&quot;>${p.emoji}</div>')"
-                        >
+                Object.values(produtos).map(p => {
+                    const estoque = obterEstoque(p.id);
+                    const itemCarrinho = carrinho.find(i => i.id === p.id);
+                    const quantidadeNoCarrinho = itemCarrinho
+                        ? itemCarrinho.quantidade
+                        : 0;
 
-                        <h3>${p.nome}</h3>
-                        <p>${p.descricao}</p>
+                    let textoEstoque = 'Consultando estoque...';
+                    let classeEstoque = 'consultando';
+                    let textoBotao = 'Aguarde...';
+                    let desabilitado = true;
 
-                        <div class="preco">${formatarMoeda(p.preco)}</div>
+                    if (estoqueErro) {
+                        textoEstoque = 'Estoque indisponível';
+                        classeEstoque = 'esgotado';
+                        textoBotao = 'Indisponível';
+                    } else if (!estoqueCarregado || estoque === null) {
+                        textoEstoque = 'Consultando estoque...';
+                        classeEstoque = 'consultando';
+                        textoBotao = 'Aguarde...';
+                    } else if (estoque === 0) {
+                        textoEstoque = 'ESGOTADO';
+                        classeEstoque = 'esgotado';
+                        textoBotao = 'Esgotado';
+                    } else {
+                        textoEstoque = 'Disponíveis: ' + estoque;
+                        classeEstoque = '';
 
-                        <button class="btn-adicionar" onclick="adicionarProduto(${p.id})">
-                            Adicionar ao pedido
-                        </button>
-                    </article>
-                `).join('');
+                        if (quantidadeNoCarrinho >= estoque) {
+                            textoBotao = 'Limite no carrinho';
+                            desabilitado = true;
+                        } else {
+                            textoBotao = 'Adicionar ao pedido';
+                            desabilitado = false;
+                        }
+                    }
+
+                    return `
+                        <article class="produto">
+                            <img
+                                src="${p.imagem}"
+                                alt="${p.nome}"
+                                onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div style=&quot;font-size:55px;margin:15px 0&quot;>${p.emoji}</div>')"
+                            >
+
+                            <h3>${p.nome}</h3>
+                            <p>${p.descricao}</p>
+
+                            <div class="preco">${formatarMoeda(p.preco)}</div>
+
+                            <div class="estoque-produto ${classeEstoque}">
+                                ${textoEstoque}
+                            </div>
+
+                            <button
+                                class="btn-adicionar"
+                                onclick="adicionarProduto(${p.id})"
+                                ${desabilitado ? 'disabled' : ''}
+                            >
+                                ${textoBotao}
+                            </button>
+                        </article>
+                    `;
+                }).join('');
         }
 
         /* CARRINHO */
 
         function adicionarProduto(id) {
+            if (!estoqueCarregado || estoqueErro) {
+                alert('Estamos consultando o estoque. Aguarde um momento e tente novamente.');
+                return;
+            }
+
+            const estoque = estoqueAtual[id];
+
+            if (!Number.isInteger(estoque) || estoque <= 0) {
+                alert('Esse sabor está esgotado no momento.');
+                renderizarProdutos();
+                return;
+            }
+
             const item = carrinho.find(i => i.id === id);
+            const quantidadeAtual = item ? item.quantidade : 0;
+
+            if (quantidadeAtual + 1 > estoque) {
+                alert('Só temos ' + estoque + ' unidade(s) disponível(is) desse sabor.');
+                return;
+            }
 
             if (item) {
                 item.quantidade++;
@@ -1212,14 +1464,11 @@
             }
 
             atualizarCarrinho();
+            renderizarProdutos();
         }
 
         function aumentarQuantidade(id) {
-            const item = carrinho.find(i => i.id === id);
-
-            if (item) item.quantidade++;
-
-            atualizarCarrinho();
+            adicionarProduto(id);
         }
 
         function diminuirQuantidade(id) {
@@ -1234,11 +1483,13 @@
             }
 
             atualizarCarrinho();
+            renderizarProdutos();
         }
 
         function removerProduto(id) {
             carrinho = carrinho.filter(i => i.id !== id);
             atualizarCarrinho();
+            renderizarProdutos();
         }
 
         function calcularTotal() {
@@ -1259,6 +1510,12 @@
 
             return carrinho.map(item => {
                 const produto = produtos[item.id];
+                const estoque = obterEstoque(item.id);
+                const podeAumentar =
+                    estoqueCarregado &&
+                    !estoqueErro &&
+                    Number.isInteger(estoque) &&
+                    item.quantidade < estoque;
 
                 return `
                     <div class="item-carrinho">
@@ -1270,18 +1527,25 @@
                         </div>
 
                         <div class="quantidade">
-                            <button onclick="diminuirQuantidade(${item.id})"
-                                    aria-label="Diminuir quantidade">−</button>
+                            <button
+                                onclick="diminuirQuantidade(${item.id})"
+                                aria-label="Diminuir quantidade"
+                            >−</button>
 
                             <span>${item.quantidade}</span>
 
-                            <button onclick="aumentarQuantidade(${item.id})"
-                                    aria-label="Aumentar quantidade">+</button>
+                            <button
+                                onclick="aumentarQuantidade(${item.id})"
+                                aria-label="Aumentar quantidade"
+                                ${podeAumentar ? '' : 'disabled'}
+                            >+</button>
                         </div>
 
-                        <button class="btn-remover"
-                                onclick="removerProduto(${item.id})"
-                                aria-label="Remover produto">🗑</button>
+                        <button
+                            class="btn-remover"
+                            onclick="removerProduto(${item.id})"
+                            aria-label="Remover produto"
+                        >🗑</button>
                     </div>
                 `;
             }).join('');
@@ -1295,6 +1559,17 @@
 
             document.getElementById('quantidadeTopo').textContent =
                 calcularQuantidadeItens();
+
+            const botaoContinuar = document.querySelector(
+                '#painelCarrinho .btn-finalizar'
+            );
+
+            if (botaoContinuar) {
+                botaoContinuar.disabled =
+                    !carrinho.length ||
+                    !estoqueCarregado ||
+                    estoqueErro;
+            }
         }
 
         /* ABRIR E FECHAR CARRINHO */
@@ -1317,8 +1592,23 @@
                 return;
             }
 
+            if (!estoqueCarregado || estoqueErro) {
+                alert('Não foi possível consultar o estoque. Aguarde e tente novamente.');
+                return;
+            }
+
+            if (!validarEstoqueCarrinho()) {
+                ajustarCarrinhoAoEstoque();
+                atualizarCarrinho();
+                renderizarProdutos();
+
+                alert('A quantidade disponível mudou. Confira o carrinho antes de continuar.');
+                return;
+            }
+
             fecharCarrinho();
             document.getElementById('checkoutModal').classList.add('aberto');
+            atualizarEstadoCheckout();
         }
 
         function fecharCheckout() {
@@ -1356,6 +1646,8 @@
                 document.getElementById('infoDinheiro').style.display = 'block';
                 document.getElementById('btnWhatsApp').style.display = 'block';
             }
+
+            atualizarEstadoCheckout();
         }
 
         /* VALIDAR FORMULÁRIO */
@@ -1367,11 +1659,24 @@
             const nome = campoNome.value.trim();
             const whatsapp = campoWhatsApp.value.replace(/\D/g, '');
 
-            // Validação original do nome preservada.
             const quantidadeLetras = nome.replace(/\s/g, '').length;
 
             if (!carrinho.length) {
                 alert('Adicione pelo menos um produto ao pedido.');
+                return false;
+            }
+
+            if (!estoqueCarregado || estoqueErro) {
+                alert('Não foi possível consultar o estoque. Aguarde e tente novamente.');
+                return false;
+            }
+
+            if (!validarEstoqueCarrinho()) {
+                ajustarCarrinhoAoEstoque();
+                atualizarCarrinho();
+                renderizarProdutos();
+
+                alert('A quantidade disponível mudou. Confira seu carrinho e tente novamente.');
                 return false;
             }
 
@@ -1440,7 +1745,6 @@
                     '\n\nPagamento no balcão informado pelo cliente.';
             }
 
-            /* Confirmação antes de sair do site */
             let resumo =
                 'CONFIRA SEU PEDIDO\n\n';
 
@@ -1463,13 +1767,24 @@
                 return;
             }
 
+            /*
+              Última conferência antes de abrir o WhatsApp.
+              O site não altera o estoque no Firestore.
+            */
+            if (!estoqueCarregado || estoqueErro || !validarEstoqueCarrinho()) {
+                alert('O estoque mudou ou não está disponível. Confira seu carrinho antes de continuar.');
+                ajustarCarrinhoAoEstoque();
+                atualizarCarrinho();
+                renderizarProdutos();
+                return;
+            }
+
             const url =
                 'https://wa.me/' +
                 WHATSAPP_FINANCEIRO +
                 '?text=' +
                 encodeURIComponent(mensagem);
 
-            /* Abre o WhatsApp em outra aba */
             const linkWhatsApp = document.createElement('a');
             linkWhatsApp.href = url;
             linkWhatsApp.target = '_blank';
@@ -1481,8 +1796,6 @@
 
             fecharCheckout();
 
-            /* Não afirma que o pedido foi recebido.
-               Orienta o cliente a conferir o envio no WhatsApp. */
             document.body.classList.add('pedido-concluido');
             document.getElementById('pedidoEnviado').style.display = 'block';
 
@@ -1536,6 +1849,7 @@
                 '👆 Toque para copiar a chave.';
 
             atualizarCarrinho();
+            renderizarProdutos();
 
             document.getElementById('pedidoEnviado').style.display = 'none';
             document.body.classList.remove('pedido-concluido');
@@ -1560,6 +1874,7 @@
 
         renderizarProdutos();
         atualizarCarrinho();
+        iniciarMonitoramentoEstoque();
     </script>
 
 </body>
